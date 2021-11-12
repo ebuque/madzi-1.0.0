@@ -58,7 +58,7 @@ export default class Welcome extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00035c',
+    backgroundColor: '#fafbfc',
     alignItems: 'center',
     height: height,
     
