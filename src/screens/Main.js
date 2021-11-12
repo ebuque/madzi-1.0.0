@@ -33,21 +33,23 @@ export default class Welcome extends Component{
 
         <View style={styles.header}>
               <View style={styles.profile}>
-                  <View style={styles.profilePhoto}></View>
+                  <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>U</Text></View>
                   <Text style={styles.userName}>User Name</Text>
                   <Text style={styles.userEmail}>user@domain.com</Text>
               </View>
         </View>
         <View style={styles.centerView}>
-              <View style={styles.logo}></View>
+              <View style={styles.logoView}>
+                <Text style={styles.logo}>LOGO</Text>
+              </View>
               <Text style={styles.appNameDesc}>Aplicativo de gestão de água</Text>
               <Text style={styles.appName}>MADZI</Text>
         </View>
-        <View style={styles.buttons}>
+        <View style={styles.buttonsView}>
               <TouchableOpacity style={styles.prePaidButton}><Text style={styles.buttonTxt}>Pré-pago</Text></TouchableOpacity>
               <TouchableOpacity style={styles.postPaidButton}><Text style={styles.buttonTxt}>Pós-pago</Text></TouchableOpacity>
         </View>
-        <View style={styles.buttomLogo}>
+        <View style={styles.footerLogo}>
               <Text style={styles.btnLogo}>FIPAG</Text>
         </View>
     </SafeAreaView>
@@ -63,67 +65,24 @@ const styles = StyleSheet.create({
     height: height,
     
   },
-  body:{
-    flex: 1,
-    alignItems: 'center',
-    
+  header:{
+    backgroundColor:"yellow",
+    width:width -70,
+    height: "25%",
+    justifyContent:'center',
+    flexDirection:"row-reverse",
   },
-  welcome:{
-      color: "white",
-      fontSize: 24,
-      fontWeight: 'bold'
-  },
-  welcomeBottom:{
-    color: "white",
-      fontSize: 34,
-      fontWeight: 'bold'
-  },
-  buttonMSG:{
-      color: "#00035c",
-      fontSize: 18,
-  },
-  welcomeDesc:{
-    color: "white",
-    fontSize: 18,
-    marginTop:30,
-  },
-  welcomeMsg: {
-    top:"10%",
+  centerView:{
     width:width-70,
-    height:200,
-    alignItems:'center',
-    justifyContent: 'center',
+    height:"30%",
+    alignItems: 'center',
+    justifyContent:'center'
   },
-  logo:{
-    top:"10%",
-    borderColor:"white",
-    borderWidth: 1,
-    width:200,
-    height:200,
-    borderRadius: 200/2,
-    alignItems:'center',
-    justifyContent: 'center',
-  },
-    logoIn:{
-    borderColor:"white",
-    borderWidth: 1,
-    width:180,
-    height:180,
-    borderRadius: 180/2,
-    backgroundColor:"white"
-  }, 
-  logoImg:{
-    width:"100%",
-    height:"100%",
-    borderRadius: 180/2,
-  },
-  loginButton :{
-    top:"15%",
-    width:300,
-    height:55,
-    borderRadius:100,
-    backgroundColor:"white",
-    
+  buttonsView:{
+   width:width-70,
+   height:"35%",
+   alignItems: 'center',
+   justifyContent:'center'
   },
   footerLogo:{
     position: 'absolute',
@@ -133,17 +92,49 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
-  googleImg :{
-    width: 35,
-    height:35,
-    marginRight:5
-
+  btnLogo:{
+    color: "#00035c",
+    fontSize: 34,
+    fontWeight: 'bold'
   },
-  touchableButton :{
-    flex:1,
-    width:"100%",
-    flexDirection: "row",
-    alignItems: 'center',
-    justifyContent: 'center',
+  prePaidButton:{
+    backgroundColor:"#05185e",
+    width:"95%",
+    height:60,
+    margin: 8,
+    borderRadius:80/2,
+    alignItems:'center',
+    justifyContent:'center'
   },
+  postPaidButton:{
+    backgroundColor:"#2191ff",
+    width:"95%",
+    height:60,
+    margin: 8,
+    borderRadius:80/2,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  buttonTxt:{
+    color: "white",
+    fontSize: 20,
+  },
+  logoView:{
+    width:80,
+    height:80,
+    alignItems:"center",
+    justifyContent:"center"
+  },
+  appNameDesc:{
+    color:"#05185e",
+    fontSize:18,
+    fontWeight:"bold",
+    margin:8
+  },
+  appName:{
+    color:"#05185e",
+    fontSize:34,
+    fontWeight:"bold",
+    marginBottom:-100
+  }
 });
