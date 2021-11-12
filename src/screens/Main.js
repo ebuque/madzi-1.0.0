@@ -33,7 +33,9 @@ export default class Welcome extends Component{
 
         <View style={styles.header}>
               <View style={styles.profile}>
+                  <View style={styles.circleView}>
                   <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>U</Text></View>
+                  </View>
                   <Text style={styles.userName}>User Name</Text>
                   <Text style={styles.userEmail}>user@domain.com</Text>
               </View>
@@ -66,20 +68,19 @@ const styles = StyleSheet.create({
     
   },
   header:{
-    backgroundColor:"yellow",
-    width:width -70,
+    width:width -30,
     height: "25%",
     justifyContent:'center',
     flexDirection:"row-reverse",
   },
   centerView:{
-    width:width-70,
+    width:width-30,
     height:"30%",
     alignItems: 'center',
     justifyContent:'center'
   },
   buttonsView:{
-   width:width-70,
+   width:width-30,
    height:"35%",
    alignItems: 'center',
    justifyContent:'center'
@@ -115,6 +116,11 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center'
   },
+  profile:{
+    marginLeft:160,
+    alignItems:"center",
+    justifyContent:"center"
+  },
   buttonTxt:{
     color: "white",
     fontSize: 20,
@@ -136,5 +142,30 @@ const styles = StyleSheet.create({
     fontSize:34,
     fontWeight:"bold",
     marginBottom:-100
+  },
+  circleView:{
+    borderWidth:1,
+    borderColor:"#2191ff",
+    height: 40,
+    width: 40,
+    borderRadius:40/2,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  profilePhoto:{
+    height: 35,
+    width: 35,
+    borderRadius:35/2,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:"#2191ff",
+  },
+  initialLetterIfNoPhoto:{
+    color:"white",
+    fontSize:18,
+    fontWeight:"bold"
+  },
+  userName:{
+    fontWeight:"bold"
   }
 });
