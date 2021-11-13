@@ -12,10 +12,15 @@ import {
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
 
-export default class Welcome extends Component{
+import {observer, inject} from "mobx-react";
+@inject("store")
+@observer
+export default class Main extends Component{
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+     
+    };
   }
 
   onPrePagoClicked = () => {
@@ -34,10 +39,11 @@ export default class Welcome extends Component{
         <View style={styles.header}>
               <View style={styles.profile}>
                   <View style={styles.circleView}>
-                  <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>U</Text></View>
+                  <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>{this.props.store.user.match(/\b\w/g).join('')}</Text></View>
                   </View>
-                  <Text style={styles.userName}>User Name</Text>
-                  <Text style={styles.userEmail}>user@domain.com</Text>
+                  <Text style={styles.userName}>{this.props.store.user}</Text>
+                  <Text style={styles.userEmail}>{this.props.store.email}</Text>
+                  <TouchableOpacity style={styles.logOut}><Text style={styles.logOutTxt}>Sair</Text></TouchableOpacity>
               </View>
         </View>
         <View style={styles.centerView}>
@@ -121,6 +127,10 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center"
   },
+  logOutTxt:{
+    color:"white",
+    fontSize:"14",
+  },
   buttonTxt:{
     color: "white",
     fontSize: 20,
@@ -164,6 +174,9 @@ const styles = StyleSheet.create({
     color:"white",
     fontSize:18,
     fontWeight:"bold"
+  },
+  logOut:{
+    backgroundColor:"red"
   },
   userName:{
     fontWeight:"bold"

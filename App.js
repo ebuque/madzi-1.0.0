@@ -5,11 +5,15 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import AppLoading from 'expo-app-loading';
 import * as Font from "expo-font";
 import "react-native-gesture-handler";
+import {Provider} from "mobx-react";
 import { NavigationContainer } from "@react-navigation/native";
 
 //Import  Screens
 import Welcome from "./src/screens/Welcome";
 import Main from "./src/screens/Main";
+
+//Import store
+import store from "./src/store";
 const DrawerNavigation = createDrawerNavigator({
   Welcome: Welcome,
   Main: Main
@@ -42,14 +46,14 @@ export default function App() {
     );
   } else {
     return isLoadingComplete ? (
-     
+      <Provider store={store}>
       <NavigationContainer>
         
         <AppContainer />
      
         
       </NavigationContainer>
-    
+      </Provider>
     ) : (
       <AppLoading />
     );

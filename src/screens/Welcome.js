@@ -16,16 +16,52 @@ const height = Math.round(Dimensions.get("window").height);
 const iosClientId = IOS_GCLIENT_ID;
 const androidClientId = ADNROID_GCLIENT_ID;
 
+import {observer, inject} from "mobx-react";
+@inject("store")
+@observer
 export default class Welcome extends Component{
+
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      user: null,
+      accessToken:null,
+      email:null,
+    };
   }
 
-  onGoogleLoginClicked = () => {
-    const { navigate } = this.props.navigation;
-    navigate("Main");
+   signInAsync = async () => {
+
+    try {
+      const result = await Google.logInAsync({
+        androidClientId: androidClientId,
+        iosClientId: iosClientId,
+        scopes: ['profile', 'email'],
+      });
+  
+      if (result.type === 'success') {
+       
+        this.props.store.addValue("fullname", result.user.name)
+        this.props.store.addValue("email", result.user.email)
+               
+        const { navigate } = this.props.navigation;
+        navigate("Main");
+      } else {
+        alert("Cancelled");
+        return { cancelled: true };
+      }
+    } catch (e) {
+      alert("Erro: "+e);
+      return { error: true };
+    }
+
   };
+
+  onPress = () => {
+    this.signInAsync();
+  };
+
+
 
   render() {
   return (
@@ -48,7 +84,7 @@ export default class Welcome extends Component{
           </View>
           
           <View style={styles.loginButton}>
-              <TouchableOpacity onPress={this.onGoogleLoginClicked} style={styles.touchableButton}>
+              <TouchableOpacity onPress={this.onPress} style={styles.touchableButton}>
               <Image style = {styles.googleImg} source={require('../../assets/img/google.png')}/>
               <Text style={styles.buttonMSG}>
                     Continuar com Google
