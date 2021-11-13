@@ -17,7 +17,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.ios.gmadzi",
+      "config":{
+        "googleSignIn":{
+          "reservedClientId":"com.googleusercontent.apps.769033067926-3e2e0sv01jugc45jeadhma9qvep0ik8"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {

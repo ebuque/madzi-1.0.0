@@ -8,9 +8,13 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import * as Google from "expo-google-app-auth";
+import {IOS_GCLIENT_ID, ADNROID_GCLIENT_ID} from '@env';
 
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
+const iosClientId = IOS_GCLIENT_ID;
+const androidClientId = ADNROID_GCLIENT_ID;
 
 export default class Welcome extends Component{
   constructor(props) {
@@ -20,7 +24,7 @@ export default class Welcome extends Component{
 
   onGoogleLoginClicked = () => {
     const { navigate } = this.props.navigation;
-    navigate("gLogin");
+    navigate("Main");
   };
 
   render() {
@@ -44,7 +48,7 @@ export default class Welcome extends Component{
           </View>
           
           <View style={styles.loginButton}>
-              <TouchableOpacity style={styles.touchableButton}>
+              <TouchableOpacity onPress={this.onGoogleLoginClicked} style={styles.touchableButton}>
               <Image style = {styles.googleImg} source={require('../../assets/img/google.png')}/>
               <Text style={styles.buttonMSG}>
                     Continuar com Google
