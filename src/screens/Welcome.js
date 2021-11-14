@@ -47,7 +47,7 @@ export default class Welcome extends Component{
         const { navigate } = this.props.navigation;
         navigate("Main");
       } else {
-        alert("Cancelled");
+  
         return { cancelled: true };
       }
     } catch (e) {

@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { Icon } from 'react-native-elements'
 
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
@@ -23,39 +24,38 @@ export default class Main extends Component{
     };
   }
 
-  onPrePagoClicked = () => {
+  onMainMenuClicked = () => {
     const { navigate } = this.props.navigation;
-    navigate("PrePago");
+    navigate("Main");
   };
 
-  onPosPagoClicked = () => {
+  onContinueClicked = () => {
     const { navigate } = this.props.navigation;
-    navigate("PosPago");
+    navigate("PrePagoDashBoard");
   };
   Logout = () =>{
     const { navigate } = this.props.navigation;
     navigate("Welcome");
   };
-  goToPrePaid =()=>{
-    const { navigate } = this.props.navigation;
-    navigate("PrePago");
-  };
-  goToPostPaid =()=>{
-    const { navigate } = this.props.navigation;
-    navigate("PosPago");
-  };
+
   render() {
   return (
     <SafeAreaView style={styles.container}>
 
         <View style={styles.header}>
+              <View style={styles.homeIcon}>
+                    <TouchableOpacity style={styles.mainMenu}>
+                        <Icon style={styles.iconMainMenu} name='home' color='#00aced' />
+                        <Text style={styles.txtMainMenu}>Menu Principal</Text>
+                    </TouchableOpacity>
+              </View>
               <View style={styles.profile}>
                   <View style={styles.circleView}>
                   <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>{this.props.store.user.match(/\b\w/g).join('')}</Text></View>
                   </View>
                   <Text style={styles.userName}>{this.props.store.user}</Text>
                   <Text style={styles.userEmail}>{this.props.store.email}</Text>
-                  <TouchableOpacity onPress={this.Logout} style={styles.logOut}><Text style={styles.logOutTxt}>Terminar sessão</Text></TouchableOpacity>
+                   <TouchableOpacity onPress={this.Logout} style={styles.logOut}><Text style={styles.logOutTxt}>Terminar sessão</Text></TouchableOpacity>
               </View>
         </View>
         <View style={styles.centerView}>
@@ -66,8 +66,8 @@ export default class Main extends Component{
               <Text style={styles.appName}>MADZI</Text>
         </View>
         <View style={styles.buttonsView}>
-              <TouchableOpacity onPress={this.goToPrePaid} style={styles.prePaidButton}><Text style={styles.buttonTxt}>Pré-pago</Text></TouchableOpacity>
-              <TouchableOpacity onPress={this.goToPostPaid} style={styles.postPaidButton}><Text style={styles.buttonTxt}>Pós-pago</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.prePaidButton}><Text style={styles.buttonTxt}>Pré-pago</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.postPaidButton}><Text style={styles.buttonTxt}>Pós-pago</Text></TouchableOpacity>
         </View>
         <View style={styles.footerLogo}>
               <Text style={styles.btnLogo}>FIPAG</Text>
@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
     fontSize:14,
     paddingRight:5,
     paddingLeft:5,
-    
   },
   buttonTxt:{
     color: "white",

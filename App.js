@@ -11,12 +11,14 @@ import { NavigationContainer } from "@react-navigation/native";
 //Import  Screens
 import Welcome from "./src/screens/Welcome";
 import Main from "./src/screens/Main";
+import PrePago from "./src/screens/PrePago"
 
 //Import store
 import store from "./src/store";
 const DrawerNavigation = createDrawerNavigator({
   Welcome: Welcome,
-  Main: Main
+  Main: Main,
+  PrePago: PrePago,
   });
 
 const StackNavigation = createStackNavigator(
@@ -25,7 +27,8 @@ const StackNavigation = createStackNavigator(
       screen: DrawerNavigation,
     },
     Welcome: Welcome,
-    Main: Main
+    Main: Main,
+    PrePago: PrePago,
   },
   {
     headerMode: "none",
