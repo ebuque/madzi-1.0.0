@@ -45,7 +45,7 @@ export default class Main extends Component{
         <View style={styles.header}>
               <View style={styles.homeIcon}>
                     <TouchableOpacity style={styles.mainMenu}>
-                        <Icon style={styles.iconMainMenu} name='home' color='#00aced' />
+                        <Icon style={styles.iconMainMenu} name='home-outline' color='#00aced' />
                         <Text style={styles.txtMainMenu}>Menu Principal</Text>
                     </TouchableOpacity>
               </View>

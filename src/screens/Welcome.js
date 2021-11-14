@@ -37,6 +37,7 @@ export default class Welcome extends Component{
         androidClientId: androidClientId,
         iosClientId: iosClientId,
         scopes: ['profile', 'email'],
+        permissions: ['public_profile', 'email', 'gender', 'location']
       });
   
       if (result.type === 'success') {
