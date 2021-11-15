@@ -8,7 +8,8 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
+import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
@@ -20,7 +21,8 @@ export default class Main extends Component{
   constructor(props) {
     super(props);
     this.state = {
-     
+     code : "",
+		 message : ""
     };
   }
 
@@ -45,7 +47,7 @@ export default class Main extends Component{
         <View style={styles.header}>
               <View style={styles.homeIcon}>
                     <TouchableOpacity style={styles.mainMenu}>
-                        <Icon style={styles.iconMainMenu} name='home-outline' color='#00aced' />
+                        <Icon style={styles.iconMainMenu} name='sc-telegram' color='#00aced' />
                         <Text style={styles.txtMainMenu}>Menu Principal</Text>
                     </TouchableOpacity>
               </View>
@@ -62,12 +64,28 @@ export default class Main extends Component{
               <View style={styles.logoView}>
                 <Text style={styles.logo}>LOGO</Text>
               </View>
-              <Text style={styles.appNameDesc}>Aplicativo de gestão de água</Text>
-              <Text style={styles.appName}>MADZI</Text>
+              <Text style={styles.lblNrContador}>Número do Contador</Text>
+              <View style={styles.inputWidget}>
+              <SmoothPinCodeInput
+                //cellSize={60}
+                codeLength={8}
+                cellStyle={{
+                  borderBottomWidth: 2,
+                  borderColor: "black",
+                }}
+                autoFocus={true}
+                animated={true}
+                cellStyleFocused={{
+                  borderColor: "black",
+                }}
+                cellStyle={styles.input}
+                value={this.state.code}
+                onTextChange={(code) => this.setState({ code, message:"" })}
+              />
+            </View>
         </View>
         <View style={styles.buttonsView}>
-              <TouchableOpacity style={styles.prePaidButton}><Text style={styles.buttonTxt}>Pré-pago</Text></TouchableOpacity>
-              <TouchableOpacity style={styles.postPaidButton}><Text style={styles.buttonTxt}>Pós-pago</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.continueButtonn}><Text style={styles.buttonTxt}>Continuar</Text></TouchableOpacity>
         </View>
         <View style={styles.footerLogo}>
               <Text style={styles.btnLogo}>FIPAG</Text>
@@ -89,7 +107,7 @@ const styles = StyleSheet.create({
     width:width -30,
     height: "25%",
     justifyContent:'center',
-    flexDirection:"row-reverse",
+    flexDirection:"row",
   },
   centerView:{
     width:width-30,
@@ -116,7 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 34,
     fontWeight: 'bold'
   },
-  prePaidButton:{
+  continueButtonn:{
     backgroundColor:"#05185e",
     width:"95%",
     height:60,
@@ -133,6 +151,14 @@ const styles = StyleSheet.create({
     borderRadius:80/2,
     alignItems:'center',
     justifyContent:'center'
+  },
+  mainMenu:{
+    alignItems:"center",
+    justifyContent:"center",
+		flexDirection:"row",
+		padding:12,
+		position: 'absolute',
+		top: 100,
   },
   profile:{
     marginLeft:160,
@@ -155,7 +181,7 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center"
   },
-  appNameDesc:{
+  lblNrContador:{
     color:"#05185e",
     fontSize:18,
     fontWeight:"bold",
@@ -195,5 +221,11 @@ const styles = StyleSheet.create({
   },
   userName:{
     fontWeight:"bold"
-  }
+  },
+  inputWidget: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "95%",
+  },
 });
