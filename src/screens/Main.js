@@ -7,6 +7,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 
 const width = Math.round(Dimensions.get("window").width);
@@ -19,32 +20,72 @@ export default class Main extends Component{
   constructor(props) {
     super(props);
     this.state = {
-     
+      isLoading:false,
+      timePassed: false,
     };
   }
 
-  onPrePagoClicked = () => {
-    const { navigate } = this.props.navigation;
-    navigate("PrePago");
-  };
 
-  onPosPagoClicked = () => {
-    const { navigate } = this.props.navigation;
-    navigate("PosPago");
-  };
   Logout = () =>{
     const { navigate } = this.props.navigation;
     navigate("Welcome");
   };
   goToPrePaid =()=>{
-    const { navigate } = this.props.navigation;
-    navigate("PrePago");
+     this.setState({isLoading: true})
+    fetch('https://google.com', /** Just to fetch something, in order to have processing time */ {
+        method: 'GET',
+        headers: {
+          Accept: 'application/html',
+          'Content-Type': 'application/html'
+        }
+    }).then((response )=> response.json()).then(
+        (json)=> {
+      
+          this.setState({isLoading: false})
+          const { navigate } = this.props.navigation;
+          navigate("PrePago");        
+      }).catch((error) => {
+        this.setState({isLoading: false})
+        const { navigate } = this.props.navigation;
+        navigate("PrePago")
+      }).finally(() => {
+        this.setState({ isLoading: false });
+        const { navigate } = this.props.navigation;
+        navigate("PrePago")
+      });
   };
   goToPostPaid =()=>{
-    const { navigate } = this.props.navigation;
-    navigate("PosPago");
+    this.setState({isLoading: true})
+    fetch('https://google.com', /** Just to fetch something, in order to have processing time */ {
+        method: 'GET',
+        headers: {
+          Accept: 'application/html',
+          'Content-Type': 'application/html'
+        }
+    }).then((response )=> response.json()).then(
+        (json)=> {
+      
+          this.setState({isLoading: false})
+          const { navigate } = this.props.navigation;
+          navigate("PosPago");        
+      }).catch((error) => {
+        this.setState({isLoading: false})
+        const { navigate } = this.props.navigation;
+        navigate("PosPago")
+      }).finally(() => {
+        this.setState({ isLoading: false });
+        const { navigate } = this.props.navigation;
+        navigate("PosPago")
+      });
   };
   render() {
+        if (this.state.isLoading==true) {
+      return (<View style={{flex:1,
+        backgroundColor: "#EAECE9",
+       alignItems: "center", justifyContent: "center"}}>
+        <ActivityIndicator size="large" color="#00035c"/>
+        </View>)
+    } else 
   return (
     <SafeAreaView style={styles.container}>
 

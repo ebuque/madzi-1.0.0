@@ -33,7 +33,7 @@ export default class Welcome extends Component{
   }
 
    signInAsync = async () => {
-
+     this.setState({isLoading: true});
     try {
       const result = await Google.logInAsync({
         androidClientId: androidClientId,
@@ -46,11 +46,11 @@ export default class Welcome extends Component{
        
         this.props.store.addValue("fullname", result.user.name)
         this.props.store.addValue("email", result.user.email)
-               
+        this.setState({isLoading: false});    
         const { navigate } = this.props.navigation;
         navigate("Main");
       } else {
-  
+        this.setState({isLoading: false});
         return { cancelled: true };
       }
     } catch (e) {
@@ -61,7 +61,6 @@ export default class Welcome extends Component{
   };
 
   onPress = () => {
-    this.setState({isLoading: true});
     this.signInAsync();
   };
 
@@ -72,8 +71,7 @@ export default class Welcome extends Component{
       return (<View style={{flex:1,
         backgroundColor: "#EAECE9",
        alignItems: "center", justifyContent: "center"}}>
-         <Text style={{fontSize:80}}>🙇‍♂️</Text>
-        <ActivityIndicator size="large" color="pink"/>
+        <ActivityIndicator size="large" color="#00035c"/>
         </View>)
     } else 
   return (

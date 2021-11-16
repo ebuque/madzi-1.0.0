@@ -4,12 +4,12 @@ import {
   View,
   SafeAreaView,
   Text,
-	TextInput,
+  Keyboard,
   Image,
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-
+import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
 
@@ -24,6 +24,8 @@ export default class PrePago extends Component{
 		 message : ""
     };
   }
+ componentDidMount() {}
+
 
   onMainMenuClicked = () => {
     const { navigate } = this.props.navigation;
@@ -64,17 +66,26 @@ export default class PrePago extends Component{
               <View style={styles.logoView}>
                 <Text style={styles.logo}>LOGO</Text>
               </View>
-              <Text style={styles.lblNrContador}>Número do Contador</Text>
+              <Text style={styles.lblNrContador}>Digita o número do Contador</Text>
               <View style={styles.inputWidget}>
-              <TextInput
-								style={{ 
-								height: "100%",
-								width:"100%", 
-								placeholderTextColor: 'gray',
-							}}
-							
-							placeholder="123456789123"
-							/>
+                <SmoothPinCodeInput
+                cellSize={25}
+                codeLength={10}
+                cellStyle={{
+                  borderBottomWidth: 2,
+                  borderColor: "#05185e",
+                }}
+                autoFocus={false}
+                animated={true}
+                cellStyleFocused={{
+                  borderColor: "black",
+                }}
+                cellStyle={styles.input}
+                value={this.state.code}
+                onTextChange={(code) => this.setState({ code, message:"" })}
+                onFulfill={Keyboard.dismiss}
+              />
+             
             </View>
         </View>
         <View style={styles.buttonsView}>
@@ -238,5 +249,10 @@ const styles = StyleSheet.create({
   homeSvg:{
     width:25,
     height:25
-  }  
+  },
+  input: {
+    //width: "%",
+    borderBottomWidth: 1,
+    fontSize: 24,
+  } 
 });
