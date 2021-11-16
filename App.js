@@ -12,6 +12,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Welcome from "./src/screens/Welcome";
 import Main from "./src/screens/Main";
 import PrePago from "./src/screens/PrePago"
+import PrePagoDashBoard from './src/screens/PrePagoDashBoard'
 
 //Import store
 import store from "./src/store";
@@ -19,6 +20,7 @@ const DrawerNavigation = createDrawerNavigator({
   Welcome: Welcome,
   Main: Main,
   PrePago: PrePago,
+  PrePagoDashBoard: PrePagoDashBoard,
   });
 
 const StackNavigation = createStackNavigator(
@@ -29,6 +31,7 @@ const StackNavigation = createStackNavigator(
     Welcome: Welcome,
     Main: Main,
     PrePago: PrePago,
+    PrePagoDashBoard: PrePagoDashBoard,
   },
   {
     headerMode: "none",
