@@ -7,6 +7,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import * as Google from "expo-google-app-auth";
 import {IOS_GCLIENT_ID, ANDROID_GCLIENT_ID} from '@env';
@@ -27,6 +28,7 @@ export default class Welcome extends Component{
       user: null,
       accessToken:null,
       email:null,
+      isLoading:false,
     };
   }
 
@@ -59,12 +61,21 @@ export default class Welcome extends Component{
   };
 
   onPress = () => {
+    this.setState({isLoading: true});
     this.signInAsync();
   };
 
 
 
   render() {
+    if (this.state.isLoading==true) {
+      return (<View style={{flex:1,
+        backgroundColor: "#EAECE9",
+       alignItems: "center", justifyContent: "center"}}>
+         <Text style={{fontSize:80}}>🙇‍♂️</Text>
+        <ActivityIndicator size="large" color="pink"/>
+        </View>)
+    } else 
   return (
     <SafeAreaView style={styles.container}>
 
