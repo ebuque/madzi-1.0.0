@@ -4,12 +4,11 @@ import {
   View,
   SafeAreaView,
   Text,
+	TextInput,
   Image,
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { Icon } from 'react-native-elements';
-import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
@@ -17,7 +16,7 @@ const height = Math.round(Dimensions.get("window").height);
 import {observer, inject} from "mobx-react";
 @inject("store")
 @observer
-export default class Main extends Component{
+export default class PrePago extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -40,15 +39,16 @@ export default class Main extends Component{
     navigate("Welcome");
   };
 
+  
   render() {
   return (
     <SafeAreaView style={styles.container}>
 
         <View style={styles.header}>
               <View style={styles.homeIcon}>
-                    <TouchableOpacity style={styles.mainMenu}>
-                        <Icon style={styles.iconMainMenu} name='sc-telegram' color='#00aced' />
-                        <Text style={styles.txtMainMenu}>Menu Principal</Text>
+                    <TouchableOpacity onPress={this.onMainMenuClicked} style={styles.mainMenu}>
+										    <Image style={styles.homeSvg} source={require('../../assets/img/home.png')}/>
+                        <Text style={styles.txtMainMenu}>MENU PRINCIPAL</Text>
                     </TouchableOpacity>
               </View>
               <View style={styles.profile}>
@@ -66,22 +66,15 @@ export default class Main extends Component{
               </View>
               <Text style={styles.lblNrContador}>Número do Contador</Text>
               <View style={styles.inputWidget}>
-              <SmoothPinCodeInput
-                //cellSize={60}
-                codeLength={8}
-                cellStyle={{
-                  borderBottomWidth: 2,
-                  borderColor: "black",
-                }}
-                autoFocus={true}
-                animated={true}
-                cellStyleFocused={{
-                  borderColor: "black",
-                }}
-                cellStyle={styles.input}
-                value={this.state.code}
-                onTextChange={(code) => this.setState({ code, message:"" })}
-              />
+              <TextInput
+								style={{ 
+								height: "100%",
+								width:"100%", 
+								placeholderTextColor: 'gray',
+							}}
+							
+							placeholder="123456789123"
+							/>
             </View>
         </View>
         <View style={styles.buttonsView}>
@@ -113,13 +106,15 @@ const styles = StyleSheet.create({
     width:width-30,
     height:"30%",
     alignItems: 'center',
-    justifyContent:'center'
+	  top:80
   },
   buttonsView:{
    width:width-30,
-   height:"35%",
+   height:"10%",
    alignItems: 'center',
-   justifyContent:'center'
+   justifyContent:'center',
+	 marginTop:60
+	 
   },
   footerLogo:{
     position: 'absolute',
@@ -136,16 +131,7 @@ const styles = StyleSheet.create({
   },
   continueButtonn:{
     backgroundColor:"#05185e",
-    width:"95%",
-    height:60,
-    margin: 8,
-    borderRadius:80/2,
-    alignItems:'center',
-    justifyContent:'center'
-  },
-  postPaidButton:{
-    backgroundColor:"#2191ff",
-    width:"95%",
+    width:"55%",
     height:60,
     margin: 8,
     borderRadius:80/2,
@@ -158,12 +144,19 @@ const styles = StyleSheet.create({
 		flexDirection:"row",
 		padding:12,
 		position: 'absolute',
-		top: 100,
+		top: 75,
   },
+	homeIcon:{
+		padding:12,
+		marginLeft:-10,
+		marginRight:20
+	},
   profile:{
     marginLeft:160,
     alignItems:"center",
-    justifyContent:"center"
+    justifyContent:"center",
+		padding:10,
+		marginRight:-10
   },
   logOutTxt:{
     color:"white",
@@ -196,23 +189,23 @@ const styles = StyleSheet.create({
   circleView:{
     borderWidth:1,
     borderColor:"#2191ff",
-    height: 40,
-    width: 40,
-    borderRadius:40/2,
+    height: 30,
+    width: 30,
+    borderRadius:30/2,
     alignItems:'center',
     justifyContent:'center'
   },
   profilePhoto:{
-    height: 35,
-    width: 35,
-    borderRadius:35/2,
+    height: 25,
+    width: 25,
+    borderRadius:25/2,
     alignItems:'center',
     justifyContent:'center',
     backgroundColor:"#2191ff",
   },
   initialLetterIfNoPhoto:{
     color:"white",
-    fontSize:18,
+    fontSize:14,
     fontWeight:"bold"
   },
   logOut:{
@@ -220,12 +213,30 @@ const styles = StyleSheet.create({
     borderRadius:40,
   },
   userName:{
-    fontWeight:"bold"
+    fontWeight:"bold",
+		fontSize:13
   },
+	userEmail:{
+		fontSize:12
+	},
   inputWidget: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     width: "95%",
+		height:80,
+		borderWidth:2,
+		borderColor:"#05185e",
+		borderRadius:16
   },
+	txtMainMenu:{
+		color:"#05185e",
+		fontWeight:"bold",
+    marginBottom:-10,
+    marginLeft:5
+	},
+  homeSvg:{
+    width:25,
+    height:25
+  }  
 });

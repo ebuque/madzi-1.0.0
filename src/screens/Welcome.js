@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as Google from "expo-google-app-auth";
-import {IOS_GCLIENT_ID, ADNROID_GCLIENT_ID} from '@env';
+import {IOS_GCLIENT_ID, ANDROID_GCLIENT_ID} from '@env';
 
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
 const iosClientId = IOS_GCLIENT_ID;
-const androidClientId = ADNROID_GCLIENT_ID;
+const androidClientId = ANDROID_GCLIENT_ID;
 
 import {observer, inject} from "mobx-react";
 @inject("store")

@@ -196,5 +196,8 @@ const styles = StyleSheet.create({
   },
   userName:{
     fontWeight:"bold"
+  },
+  userEmail:{
+    
   }
 });
