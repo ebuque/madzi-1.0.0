@@ -82,9 +82,9 @@ export default class PrePagoDashBoard extends Component{
               <TouchableOpacity style={styles.actionButton4}><Text style={styles.buttonTxt3}>Histórico de Compras</Text></TouchableOpacity>
         </View>
        
-        <View style={styles.footerLogo}>
-              <Text style={styles.btnLogo}>FIPAG</Text>
-        </View>
+          <View style={styles.footerLogo}>
+             <Image style={styles.imgFooterLogo} source={require('../../assets/img/footer-logo-blue.png')}/>
+          </View>
     </SafeAreaView>
   );
   }
@@ -123,11 +123,11 @@ const styles = StyleSheet.create({
   },
   footerLogo:{
     position: 'absolute',
-    bottom:50,
-    width:200,
+    bottom:'5%',
+    width:130,
     height:40,
     alignItems: 'center',
-    
+    padding:8
   },
   btnLogo:{
     color: "#00035c",

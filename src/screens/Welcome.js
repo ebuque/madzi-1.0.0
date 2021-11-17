@@ -103,9 +103,7 @@ export default class Welcome extends Component{
           </View>
          
           <View style={styles.footerLogo}>
-              <Text style={styles.welcomeBottom}>
-                FIPAG
-              </Text>
+             <Image style={styles.imgFooterLogo} source={require('../../assets/img/footer-logo-blue.png')}/>
           </View>
         </View>
     </SafeAreaView>
@@ -185,12 +183,13 @@ const styles = StyleSheet.create({
   },
   footerLogo:{
     position: 'absolute',
-    bottom:50,
-    width:200,
+    bottom:'5%',
+    width:130,
     height:40,
     alignItems: 'center',
-    
+    padding:8
   },
+  
   googleImg :{
     width: 35,
     height:35,
