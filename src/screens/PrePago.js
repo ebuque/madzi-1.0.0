@@ -117,11 +117,16 @@ export default class PrePago extends Component{
                 cellStyle={{
                   borderBottomWidth: 2,
                   borderColor: "#05185e",
+                 
+                }}
+                textStyle={{
+                  fontSize: 24,
+                  color: '#05185e'
                 }}
                 autoFocus={false}
                 animated={true}
                 cellStyleFocused={{
-                  borderColor: "red",
+                  borderColor: "white",
                 }}
                 cellStyle={styles.input}
                 value={this.state.code}
@@ -233,10 +238,10 @@ const styles = StyleSheet.create({
   },
   lblNrContador:{
     color:"#05185e",
-    fontSize:20,
+    fontSize:24,
     fontWeight:"bold",
     margin:22,
-    marginLeft:-100
+    marginLeft:-130
   },
   appName:{
     color:"#05185e",
@@ -281,7 +286,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    width: "95%",
+    width: width-30,
 		height:80,
 		borderWidth:2,
 		borderColor:"#05185e",
@@ -298,8 +303,9 @@ const styles = StyleSheet.create({
     height:25
   },
   input: {
-    //width: "%",
-    borderBottomWidth: 1,
-    fontSize: 24,
-  } 
+    borderBottomWidth: 2,
+    marginBottom:-15,
+    height:40,
+    width:22
+    } 
 });
