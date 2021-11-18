@@ -31,13 +31,12 @@ export default class PrePago extends Component{
  verifyAccount = () =>
  {
    this.setState({isLoading: true});
-   if(!(this.state.code=="")){
+   if(this.state.code!==""){
      fetch(`${this.props.store.apiHost}${this.props.store.simulateEndPoint}?eld=${this.props.store.eld}&eKey=${this.props.store.eKey}&userId=${this.props.store.userId}&meterNumber=${this.state.code}&amount=0&token=${this.props.store.token}`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin':'*'
         }
       }).then((response )=> response.json()).then(
         (json)=> {
@@ -59,6 +58,9 @@ export default class PrePago extends Component{
       }).finally(() => {
         this.setState({ isLoading: false });
       });
+   }else{
+    this.setState({isLoading: false, message: "Por favor preencha o nr. de contador"});
+    alert(this.state.message)
    }
       
  }
