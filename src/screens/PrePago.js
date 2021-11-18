@@ -36,12 +36,14 @@ export default class PrePago extends Component{
         method: 'GET',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin':'*'
         }
       }).then((response )=> response.json()).then(
         (json)=> {
             alert(JSON.stringify(json))
-    
+          //alert(JSON.stringify(`${this.props.store.apiHost}${this.props.store.simulateEndPoint}?eld=${this.props.store.eld}&eKey=${this.props.store.eKey}&userId=${this.props.store.userId}&meterNumber=${this.state.code}&amount=0&token=${this.props.store.token}`))
+        
         // if (json.errorCode==null) {
         //     alert(json.customerName)
         //     //  const { navigate } = this.props.navigation;
