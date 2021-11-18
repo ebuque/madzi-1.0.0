@@ -101,7 +101,7 @@ export default class Main extends Component{
         </View>
         <View style={styles.centerView}>
               <View style={styles.logoView}>
-                <Text style={styles.logo}>LOGO</Text>
+                <Image style={styles.logo} source={require('../../assets/img/logo.png')}/>
               </View>
               <Text style={styles.appNameDesc}>Aplicativo de gestão de água</Text>
               <Text style={styles.appName}>MADZI</Text>
@@ -142,7 +142,8 @@ const styles = StyleSheet.create({
    width:width-30,
    height:"35%",
    alignItems: 'center',
-   justifyContent:'center'
+   justifyContent:'center',
+   marginTop:-20
   },
   footerLogo:{
     position: 'absolute',
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
   prePaidButton:{
     backgroundColor:"#05185e",
     width:"95%",
-    height:60,
+    height:80,
     margin: 8,
     borderRadius:80/2,
     alignItems:'center',
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
   postPaidButton:{
     backgroundColor:"#2191ff",
     width:"95%",
-    height:60,
+    height:80,
     margin: 8,
     borderRadius:80/2,
     alignItems:'center',
@@ -178,7 +179,8 @@ const styles = StyleSheet.create({
   profile:{
     marginLeft:160,
     alignItems:"center",
-    justifyContent:"center"
+    justifyContent:"center",
+    marginTop:-50
   },
   logOutTxt:{
     color:"white",
@@ -192,16 +194,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   logoView:{
-    width:80,
-    height:80,
+    width:50,
+    height:50,
     alignItems:"center",
-    justifyContent:"center"
+    justifyContent:"center",
+    marginTop:-80,
+    margin:8
   },
   appNameDesc:{
     color:"#05185e",
     fontSize:18,
     fontWeight:"bold",
-    margin:8
+    margin:32
   },
   appName:{
     color:"#05185e",

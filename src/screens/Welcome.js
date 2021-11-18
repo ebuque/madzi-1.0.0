@@ -80,7 +80,7 @@ export default class Welcome extends Component{
         <View style={styles.body}>
           <View style={styles.logo}>
             <View style={styles.logoIn}>
-                <Image style={styles.logoImg} source={require("../../assets/icon.png")} />
+                <Image style={styles.logoImg} source={require("../../assets/img/logo.png")} />
              </View>
           </View>
           <View style={styles.welcomeMsg}>
@@ -103,7 +103,7 @@ export default class Welcome extends Component{
           </View>
          
           <View style={styles.footerLogo}>
-             <Image style={styles.imgFooterLogo} source={require('../../assets/img/footer-logo-blue.png')}/>
+             <Image style={styles.imgFooterLogo} source={require('../../assets/img/footer-logo-white.png')}/>
           </View>
         </View>
     </SafeAreaView>
@@ -166,14 +166,11 @@ const styles = StyleSheet.create({
     width:180,
     height:180,
     borderRadius: 180/2,
-    backgroundColor:"white"
+    backgroundColor:"white",
+    alignItems:'center',
+    justifyContent:'center'
   }, 
-  logoImg:{
-    width:"100%",
-    height:"100%",
-    borderRadius: 180/2,
-  },
-  loginButton :{
+   loginButton :{
     top:"15%",
     width:300,
     height:55,

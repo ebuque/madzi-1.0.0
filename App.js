@@ -11,8 +11,9 @@ import { NavigationContainer } from "@react-navigation/native";
 //Import  Screens
 import Welcome from "./src/screens/Welcome";
 import Main from "./src/screens/Main";
-import PrePago from "./src/screens/PrePago"
-import PrePagoDashBoard from './src/screens/PrePagoDashBoard'
+import PrePago from "./src/screens/PrePago";
+import PrePagoDashBoard from './src/screens/PrePagoDashBoard';
+import PrePagoPayment from './src/screens/PrePagoPayment';
 
 //Import store
 import store from "./src/store";
@@ -21,6 +22,7 @@ const DrawerNavigation = createDrawerNavigator({
   Main: Main,
   PrePago: PrePago,
   PrePagoDashBoard: PrePagoDashBoard,
+  PrePagoPayment:PrePagoPayment,
   });
 
 const StackNavigation = createStackNavigator(
@@ -32,6 +34,7 @@ const StackNavigation = createStackNavigator(
     Main: Main,
     PrePago: PrePago,
     PrePagoDashBoard: PrePagoDashBoard,
+    PrePagoPayment:PrePagoPayment,
   },
   {
     headerMode: "none",

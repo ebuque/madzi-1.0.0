@@ -4,71 +4,34 @@ import {
   View,
   SafeAreaView,
   Text,
-  Keyboard,
   Image,
   Dimensions,
   TouchableOpacity,
-  ActivityIndicator,
+  ActivityIndicator
 } from "react-native";
-import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
 
 import {observer, inject} from "mobx-react";
 @inject("store")
 @observer
-export default class PrePago extends Component{
+export default class PrePagoPayment extends Component{
   constructor(props) {
     super(props);
     this.state = {
      code : "",
 		 message : "",
-     isLoading: false
+    isLoading:false,
     };
   }
- componentDidMount() {}
+  componentDidMount() {}
 
- verifyAccount = () =>
- {
-   this.setState({isLoading: true});
-   if(!(this.state.code=="")){
-     fetch(`${this.props.store.apiHost}/${this.props.store.simulateEndPoint}?eld=${this.props.store.eld}&eKey=${this.props.store.eKey}&userId=${this.props.store.userid}&meterNumber=${this.state.code}&amount=0&token=${this.props.store.token}`, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      }).then((response )=> response.json()).then(
-        (json)=> {
-           alert('⚠️', json)
-        // if (json.errorCode==null) {
-        //     alert(json.customerName)
-        //     //  const { navigate } = this.props.navigation;
-        //     //  navigate("PrePagoDashBoard");
-        // } else {
-        //   this.setState({isLoading: false, message: "Nr. de Contador inválido"})
-        //   alert('⚠️', this.state.message)
-        // }
-        
-      }).catch((error) => {
-        this.setState({isLoading: false, message: "Desculpa, estamos a enfrentar alguns problemas ⚒️"})
-        alert('⚠️', this.state.message)
-      }).finally(() => {
-        this.setState({ isLoading: false });
-      });
-   }
-      
- }
 
   onMainMenuClicked = () => {
     const { navigate } = this.props.navigation;
-    navigate("Main");
+    navigate("PrePago");
   };
 
-  onContinueClicked = () => {
-    const { navigate } = this.props.navigation;
-    navigate("PrePagoDashBoard");
-  };
   Logout = () =>{
     const { navigate } = this.props.navigation;
     navigate("Welcome");
@@ -76,7 +39,7 @@ export default class PrePago extends Component{
 
   
   render() {
-    if (this.state.isLoading==true) {
+     if (this.state.isLoading==true) {
       return (<View style={{flex:1,
         backgroundColor: "#EAECE9",
        alignItems: "center", justifyContent: "center"}}>
@@ -84,13 +47,16 @@ export default class PrePago extends Component{
         </View>)
     } else 
   return (
+
+
     <SafeAreaView style={styles.container}>
 
         <View style={styles.header}>
-              <View style={styles.homeIcon}>
+          <View style={styles.backAndProfile}>
+              <View style={styles.backIcon}>
                     <TouchableOpacity onPress={this.onMainMenuClicked} style={styles.mainMenu}>
-										    <Image style={styles.homeSvg} source={require('../../assets/img/home.png')}/>
-                        <Text style={styles.txtMainMenu}>MENU PRINCIPAL</Text>
+										    <Image style={styles.backArrow} source={require('../../assets/img/back.png')}/>
+                        <Text style={styles.txtMainMenu}>Pagamento</Text>
                     </TouchableOpacity>
               </View>
               <View style={styles.profile}>
@@ -101,36 +67,21 @@ export default class PrePago extends Component{
                   <Text style={styles.userEmail}>{this.props.store.email}</Text>
                    <TouchableOpacity onPress={this.Logout} style={styles.logOut}><Text style={styles.logOutTxt}>Terminar sessão</Text></TouchableOpacity>
               </View>
-        </View>
-        <View style={styles.centerView}>
-              <View style={styles.logoView}>
-                <Image style={styles.logo} source={require('../../assets/img/logo.png')}/>
-              </View>
-              <Text style={styles.lblNrContador}>Digita o número {'\n'}do Contador</Text>
-              <View style={styles.inputWidget}>
-                <SmoothPinCodeInput
-                cellSize={20}
-                codeLength={13}
-                cellStyle={{
-                  borderBottomWidth: 2,
-                  borderColor: "#05185e",
-                }}
-                autoFocus={false}
-                animated={true}
-                cellStyleFocused={{
-                  borderColor: "red",
-                }}
-                cellStyle={styles.input}
-                value={this.state.code}
-                onTextChange={(meterNumber) => this.setState({ code:meterNumber, message:"" })}
-                onFulfill={Keyboard.dismiss}
-              />
-             
+            </View>
+            <View style={styles.clientDetails}>
+                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
+                <Text style={{color:'white', fontSize:24, fontWeight:'bold', marginLeft:8, marginLeft:32}}>Olegario Mariquele</Text>
+                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: 0120033004444</Text>
+                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: Av. 24 de Julho, nr. 2930</Text>
             </View>
         </View>
-        <View style={styles.buttonsView}>
-              <TouchableOpacity onPress={this.verifyAccount} style={styles.continueButtonn}><Text style={styles.buttonTxt}>Continuar</Text></TouchableOpacity>
+        <View style={styles.centerView}>
+              <TouchableOpacity style={styles.actionButton1}><Text style={styles.buttonTxt}>Comprar Água</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.actionButton2}><Text style={styles.buttonTxt}>Pagar Dívidas</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.actionButton3}><Text style={styles.buttonTxt}>Reclamações</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.actionButton4}><Text style={styles.buttonTxt3}>Histórico de Compras</Text></TouchableOpacity>
         </View>
+       
           <View style={styles.footerLogo}>
              <Image style={styles.imgFooterLogo} source={require('../../assets/img/footer-logo-blue.png')}/>
           </View>
@@ -147,25 +98,28 @@ const styles = StyleSheet.create({
     height: height,
     
   },
+  backAndProfile:{
+    flexDirection:"row",
+    height:'40%'
+  },
+  clientDetails:{
+    height:'60%',
+    flexDirection:'column'
+  },
   header:{
     width:width -30,
-    height: "25%",
+    height: "45%",
     justifyContent:'center',
-    flexDirection:"row",
+    backgroundColor:"#00035c",
+    width:'100%',
+    borderBottomRightRadius:50,
+    borderBottomLeftRadius:50
   },
   centerView:{
     width:width-30,
     height:"30%",
     alignItems: 'center',
 	  top:80
-  },
-  buttonsView:{
-   width:width-30,
-   height:"10%",
-   alignItems: 'center',
-   justifyContent:'center',
-	 marginTop:60
-	 
   },
   footerLogo:{
     position: 'absolute',
@@ -180,15 +134,42 @@ const styles = StyleSheet.create({
     fontSize: 34,
     fontWeight: 'bold'
   },
-  continueButtonn:{
+  actionButton1:{
     backgroundColor:"#05185e",
-    width:"55%",
-    height:80,
-    margin: 32,
+    width:"95%",
+    height:60,
+    marginTop: -40,
+    borderRadius:80/2,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+    actionButton2:{
+    backgroundColor:"#2190fe",
+    width:"95%",
+    height:60,
     borderRadius:80/2,
     alignItems:'center',
     justifyContent:'center',
-    marginBottom:-80
+    margin:16
+  },
+    actionButton3:{
+    backgroundColor:"#b8c8e2",
+    width:"95%",
+    height:60,
+    borderRadius:80/2,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+    actionButton4:{
+    backgroundColor:"#fbfbfd",
+    width:"95%",
+    borderWidth:1,
+    borderColor:'#2190fe',
+    height:60,
+    borderRadius:80/2,
+    alignItems:'center',
+    justifyContent:'center',
+    margin:16
   },
   mainMenu:{
     alignItems:"center",
@@ -198,11 +179,6 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		top: 75,
   },
-	homeIcon:{
-		padding:12,
-		marginLeft:-10,
-		marginRight:20
-	},
   profile:{
     marginLeft:160,
     alignItems:"center",
@@ -220,20 +196,21 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
   },
+  buttonTxt3:{
+    color: "#05185e",
+    fontSize: 20,
+  },
   logoView:{
     width:80,
     height:80,
     alignItems:"center",
-    justifyContent:"center",
-    margin:32,
-    marginTop:-50
+    justifyContent:"center"
   },
   lblNrContador:{
     color:"#05185e",
-    fontSize:20,
+    fontSize:18,
     fontWeight:"bold",
-    margin:22,
-    marginLeft:-100
+    margin:8
   },
   appName:{
     color:"#05185e",
@@ -269,34 +246,28 @@ const styles = StyleSheet.create({
   },
   userName:{
     fontWeight:"bold",
-		fontSize:13
+		fontSize:13,
+    color:"white"
   },
 	userEmail:{
-		fontSize:12
+		fontSize:12,
+    color:"white"
 	},
-  inputWidget: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "95%",
-		height:80,
-		borderWidth:2,
-		borderColor:"#05185e",
-		borderRadius:16
-  },
 	txtMainMenu:{
-		color:"#05185e",
+		color:"white",
 		fontWeight:"bold",
-    marginBottom:-10,
+    marginTop:-40,
     marginLeft:5
 	},
-  homeSvg:{
+	backIcon:{
+		padding:12,
+		marginLeft:-10,
+		marginRight:20
+	},
+  backArrow:{
+    marginTop:-40,
     width:25,
     height:25
-  },
-  input: {
-    //width: "%",
-    borderBottomWidth: 1,
-    fontSize: 24,
-  } 
+  }
+  
 });
