@@ -32,7 +32,7 @@ export default class PrePago extends Component{
  {
    this.setState({isLoading: true});
    if(!(this.state.code=="")){
-     fetch(`${this.props.store.apiHost}/${this.props.store.simulateEndPoint}?eld=${this.props.store.eld}&eKey=${this.props.store.eKey}&userId=${this.props.store.userid}&meterNumber=${this.state.code}&amount=0&token=${this.props.store.token}`, {
+     fetch(`${this.props.store.apiHost}${this.props.store.simulateEndPoint}?eld=${this.props.store.eld}&eKey=${this.props.store.eKey}&userId=${this.props.store.userId}&meterNumber=${this.state.code}&amount=0&token=${this.props.store.token}`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -40,7 +40,8 @@ export default class PrePago extends Component{
         }
       }).then((response )=> response.json()).then(
         (json)=> {
-           alert('⚠️', json)
+            alert(JSON.stringify(json))
+    
         // if (json.errorCode==null) {
         //     alert(json.customerName)
         //     //  const { navigate } = this.props.navigation;
@@ -52,7 +53,7 @@ export default class PrePago extends Component{
         
       }).catch((error) => {
         this.setState({isLoading: false, message: "Desculpa, estamos a enfrentar alguns problemas ⚒️"})
-        alert('⚠️', this.state.message)
+        alert(this.state.message + error)
       }).finally(() => {
         this.setState({ isLoading: false });
       });
