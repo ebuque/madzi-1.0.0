@@ -9,6 +9,9 @@ class Loja {
     @observable eKey = "e2d25046-1cee-4ac8-b917-6879c2f30b36"
     @observable userId = "ptekid"
     @observable token = "63BDAAAC-EC5C-4C38-AC76-8397F46343DA"
+    @observable customerName = ""
+    @observable meterNumber = ""
+    @observable customerAddress =""
     @action addValue = (type, item)  => {
         switch (type) {
             case 'email':
@@ -17,6 +20,15 @@ class Loja {
             case 'fullname':
                 this.user = item;
                 break;
+            case 'customerName':
+            this.customerName = item;
+            break;
+            case 'meterNumber':
+            this.meterNumber = item;
+            break;
+            case 'customerAddress':
+            this.customerAddress = item;
+            break;
             default:
                 break;
         }

@@ -32,7 +32,7 @@ export default class PrePago extends Component{
  {
    this.setState({isLoading: true});
    if(this.state.code!==""){
-     fetch(`${this.props.store.apiHost}${this.props.store.simulateEndPoint}?eld=${this.props.store.eld}&eKey=${this.props.store.eKey}&userId=${this.props.store.userId}&meterNumber=${this.state.code}&amount=0&token=${this.props.store.token}`, {
+     fetch(`${this.props.store.apiHost}${this.props.store.simulateEndPoint}?eId=${this.props.store.eld}&eKey=${this.props.store.eKey}&userId=${this.props.store.userId}&meterNumber=${this.state.code}&amount=0&token=${this.props.store.token}`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -40,17 +40,18 @@ export default class PrePago extends Component{
         }
       }).then((response )=> response.json()).then(
         (json)=> {
-            alert(JSON.stringify(json))
-          //alert(JSON.stringify(`${this.props.store.apiHost}${this.props.store.simulateEndPoint}?eld=${this.props.store.eld}&eKey=${this.props.store.eKey}&userId=${this.props.store.userId}&meterNumber=${this.state.code}&amount=0&token=${this.props.store.token}`))
-        
-        // if (json.errorCode==null) {
-        //     alert(json.customerName)
-        //     //  const { navigate } = this.props.navigation;
-        //     //  navigate("PrePagoDashBoard");
-        // } else {
-        //   this.setState({isLoading: false, message: "Nr. de Contador inválido"})
-        //   alert('⚠️', this.state.message)
-        // }
+           
+        if (json.errorCode==null) {
+            this.setState({isLoading: false});
+            this.props.store.addValue('customerName', json.customerName);
+            this.props.store.addValue('meterNumber', json.meterNumber);
+            this.props.store.addValue('customerAddress', json.customerDistrict);
+            const { navigate } = this.props.navigation;
+            navigate("PrePagoDashBoard");
+        } else {
+          this.setState({isLoading: false, message: "Nr. de Contador inválido"})
+          alert(this.state.message)
+        }
         
       }).catch((error) => {
         this.setState({isLoading: false, message: "Desculpa, estamos a enfrentar alguns problemas ⚒️"})
@@ -306,7 +307,6 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 2,
-    marginBottom:-15,
     height:40,
     width:22
     } 

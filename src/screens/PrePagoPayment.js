@@ -5,10 +5,14 @@ import {
   SafeAreaView,
   Text,
   Image,
+  TextInput,
   Dimensions,
+  Keyboard,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  ScrollView
 } from "react-native";
+import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
 
@@ -19,8 +23,9 @@ export default class PrePagoPayment extends Component{
   constructor(props) {
     super(props);
     this.state = {
-     code : "",
+     amount : "",
 		 message : "",
+     decimal: "",
     isLoading:false,
     };
   }
@@ -70,20 +75,60 @@ export default class PrePagoPayment extends Component{
             </View>
             <View style={styles.clientDetails}>
                 <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
-                <Text style={{color:'white', fontSize:24, fontWeight:'bold', marginLeft:8, marginLeft:32}}>Olegario Mariquele</Text>
-                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: 0120033004444</Text>
-                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: Av. 24 de Julho, nr. 2930</Text>
+                <Text style={{color:'white', fontSize:24, fontWeight:'bold', marginLeft:8, marginLeft:32}}>{this.props.store.customerName}</Text>
+                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: {this.props.store.meterNumber}</Text>
+                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: {this.props.store.customerAddress}</Text>
             </View>
         </View>
-        <View style={styles.centerView}>
-              <TouchableOpacity style={styles.actionButton1}><Text style={styles.buttonTxt}>Comprar Água</Text></TouchableOpacity>
-              <TouchableOpacity style={styles.actionButton2}><Text style={styles.buttonTxt}>Pagar Dívidas</Text></TouchableOpacity>
-              <TouchableOpacity style={styles.actionButton3}><Text style={styles.buttonTxt}>Reclamações</Text></TouchableOpacity>
-              <TouchableOpacity style={styles.actionButton4}><Text style={styles.buttonTxt3}>Histórico de Compras</Text></TouchableOpacity>
+
+
+        <View style={styles.viewAmount}>
+          <Text style={styles.lblAmount}>Insira o valor</Text>
+          <View style={styles.viewAmountInputs}>
+           <TextInput
+            style={styles.amountValue}
+            placeholder="1024"
+            onChangeText={(text) => this.setState({ amount:text })}
+            defaultValue={this.state.amount}
+            keyboardType="numeric"
+            maxLength={5}
+          />
+          <Text style={styles.dot}>.</Text>
+          <SmoothPinCodeInput
+                cellSize={20}
+                codeLength={2}
+                textStyle={{
+                  fontSize: 24,
+                  color: '#454F5A'
+                }}
+                autoFocus={false}
+                animated={false}
+                cellStyle={styles.decimals}
+                value={this.state.decimal}
+                onTextChange={(decimal) => this.setState({ decimal:decimal })}
+                onFulfill={Keyboard.dismiss}
+              />
         </View>
-       
+        </View>
+
+        <View style={styles.viewPaymentSystems}>
+          <Text style={styles.lblPayments}>Pagar com:</Text>
+          <View style={styles.viewFirstRow}>
+          <TouchableOpacity style={styles.paymentButtonsMP}>
+            <Text style={styles.lblPaymentBtn}>M-pesa</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.paymentButtonsCM}>
+            <Text style={styles.lblPaymentBtn}>Conta Movel</Text>
+          </TouchableOpacity>
+          </View>
+          <View style={styles.viewSecondRow}>
+          <TouchableOpacity style={styles.paymentButtonsCD}>
+            <Text style={styles.lblPaymentBtn}>Cartão de Credito/Debito</Text>
+          </TouchableOpacity>
+          </View>
+        </View>
           <View style={styles.footerLogo}>
-             <Image style={styles.imgFooterLogo} source={require('../../assets/img/footer-logo-blue.png')}/>
+             <Image style={styles.imgFooterLogo} source={require('../../assets/img/fipagmadzi.png')}/>
           </View>
     </SafeAreaView>
   );
@@ -98,17 +143,112 @@ const styles = StyleSheet.create({
     height: height,
     
   },
+  amountValue:{
+    backgroundColor:"#454F5A",
+    width:width/2,
+    height:height/16,
+    borderRadius:9,
+    fontSize:26,
+    alignItems:'center',
+    justifyContent:'center'
+    
+  },
+  decimals:{
+    backgroundColor:"#454F5A",
+    width:width/8,
+    height:height/16,
+    borderRadius:9,
+    fontSize:26,
+    alignItems:'center',
+    justifyContent:'center',
+    margin:16
+  },
+  lblAmount:{
+    fontSize:26,
+    fontWeight:"bold",
+    marginTop:10,
+    marginLeft:16,
+  },
+  lblPayments:{
+    fontSize:26,
+    fontWeight:"bold",
+    marginLeft:16,
+    color:"#05185E"
+  },
+  lblPaymentBtn:{
+    fontSize:26,
+    fontWeight:"bold",
+    color:"white"
+  },
+  viewAmountInputs:{
+    width:width-30,
+    height: height/8,
+    flexDirection:"row",
+    color:"#202121"
+  },
+  dot:{
+    fontSize:80,
+    marginTop:-40,
+    color:"#202121"
+  },
+  viewFirstRow:{
+    width:width-30,
+    alignItems:'center',
+    justifyContent:"center",
+    height: height/8,
+    flexDirection:"row",
+    margin:8
+  },
+  viewSecondRow:{
+    width:width-30,
+    alignItems:'center',
+    justifyContent:"center",
+    height: height/10,
+    margin:8,
+    marginTop:4
+  },
+   paymentButtonsCD:{
+      backgroundColor:"#05185E",
+      height:"100%",
+      width:"100%",
+      borderRadius:16,
+      justifyContent:"center",
+      alignItems:"center"
+   },
+   paymentButtonsMP:{
+      backgroundColor:"#191818",
+      height:"100%",
+      width:"50%",
+      borderRadius:16,
+      justifyContent:"center",
+      alignItems:"center",
+      marginRight:8
+   },
+   paymentButtonsCM:{
+      backgroundColor:"#3B8BD8",
+      height:"100%",
+      width:"50%",
+      borderRadius:16,
+      justifyContent:"center",
+      alignItems:"center",
+   },
+   viewPaymentSystems:{
+     backgroundColor:"white",
+     padding:16,
+     borderTopRightRadius:50,
+     borderTopLeftRadius:50
+   },
   backAndProfile:{
     flexDirection:"row",
     height:'40%'
   },
   clientDetails:{
     height:'60%',
-    flexDirection:'column'
+    flexDirection:'column',
   },
   header:{
     width:width -30,
-    height: "45%",
+    height: height/2.4,
     justifyContent:'center',
     backgroundColor:"#00035c",
     width:'100%',

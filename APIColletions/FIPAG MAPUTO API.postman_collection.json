@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "5f1a222e-efd6-4155-ab29-5f16ce740638",
+		"name": "FIPAG MAPUTO API",
+		"description": "Set of webservices for recharge purchase",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Last Recharge",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://41.223.152.98:8077/fipagmaputo/api/recharge/last?eId=PLUS_TEK&eKey=e2d25046-1cee-4ac8-b917-6879c2f30b36&userId=ptekid&meterNumber=0120033004444&token=63BDAAAC-EC5C-4C38-AC76-8397F46343DA",
+					"protocol": "http",
+					"host": [
+						"41",
+						"223",
+						"152",
+						"98"
+					],
+					"port": "8077",
+					"path": [
+						"fipagmaputo",
+						"api",
+						"recharge",
+						"last"
+					],
+					"query": [
+						{
+							"key": "eId",
+							"value": "PLUS_TEK"
+						},
+						{
+							"key": "eKey",
+							"value": "e2d25046-1cee-4ac8-b917-6879c2f30b36"
+						},
+						{
+							"key": "userId",
+							"value": "ptekid"
+						},
+						{
+							"key": "meterNumber",
+							"value": "0120033004444"
+						},
+						{
+							"key": "token",
+							"value": "63BDAAAC-EC5C-4C38-AC76-8397F46343DA"
+						}
+					]
+				},
+				"description": "This service will return the last generated recharge code. \r\nThe service return recharges generated within a month."
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://41.223.152.98:8077/fipagmaputo/api/auth/key?eId=PLUS_TEK&eKey=e2d25046-1cee-4ac8-b917-6879c2f30b36&userId=ptekid",
+					"protocol": "http",
+					"host": [
+						"41",
+						"223",
+						"152",
+						"98"
+					],
+					"port": "8077",
+					"path": [
+						"fipagmaputo",
+						"api",
+						"auth",
+						"key"
+					],
+					"query": [
+						{
+							"key": "eId",
+							"value": "PLUS_TEK"
+						},
+						{
+							"key": "eKey",
+							"value": "e2d25046-1cee-4ac8-b917-6879c2f30b36"
+						},
+						{
+							"key": "userId",
+							"value": "ptekid"
+						}
+					]
+				},
+				"description": "Get auth token for requests"
+			},
+			"response": []
+		},
+		{
+			"name": "Process Transaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"simulationId\":\"bd6f854d-e746-4779-8c57-21d7ded56c26\",\r\n  \"eId\":\"PLUS_TEK\",\r\n  \"eKey\":\"3667d86e-075e-4c0c-a75d-7135591b8bf2\",\r\n  \"userId\":\"ptekid\",\r\n  \"token\":\"63BDAAAC-EC5C-4C38-AC76-8397F46343DA\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://41.223.152.98:8077/fipagmaputo/api/recharge/generate",
+					"protocol": "http",
+					"host": [
+						"41",
+						"223",
+						"152",
+						"98"
+					],
+					"port": "8077",
+					"path": [
+						"fipagmaputo",
+						"api",
+						"recharge",
+						"generate"
+					]
+				},
+				"description": "Generates Recharge Code"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transaction Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://41.223.152.98:8077/fipagmaputo/api/recharge/simulate?eId=PLUS_TEK&eKey=e2d25046-1cee-4ac8-b917-6879c2f30b36&userId=ptekid&meterNumber=0120033004444&amount=1000&token=63BDAAAC-EC5C-4C38-AC76-8397F46343DA",
+					"protocol": "http",
+					"host": [
+						"41",
+						"223",
+						"152",
+						"98"
+					],
+					"port": "8077",
+					"path": [
+						"fipagmaputo",
+						"api",
+						"recharge",
+						"simulate"
+					],
+					"query": [
+						{
+							"key": "eId",
+							"value": "PLUS_TEK"
+						},
+						{
+							"key": "eKey",
+							"value": "e2d25046-1cee-4ac8-b917-6879c2f30b36"
+						},
+						{
+							"key": "userId",
+							"value": "ptekid"
+						},
+						{
+							"key": "meterNumber",
+							"value": "0120033004444"
+						},
+						{
+							"key": "amount",
+							"value": "1000"
+						},
+						{
+							"key": "token",
+							"value": "63BDAAAC-EC5C-4C38-AC76-8397F46343DA"
+						}
+					]
+				},
+				"description": "Return commissions, debts, water units and customer details"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

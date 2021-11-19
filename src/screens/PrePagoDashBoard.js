@@ -29,9 +29,21 @@ export default class PrePagoDashBoard extends Component{
 
   onMainMenuClicked = () => {
     const { navigate } = this.props.navigation;
-    navigate("PrePago");
+    navigate("Main");
   };
 
+  PrePagoPayment = () =>{
+     this.setState({isLoading: true});
+     if(this.props.store.user!==""){
+        this.setState({isLoading: false});
+        const { navigate } = this.props.navigation;
+        navigate("PrePagoPayment");
+     }else{
+        this.setState({isLoading: false});
+        const { navigate } = this.props.navigation;
+        navigate("Welcome");
+     }
+  };
   Logout = () =>{
     const { navigate } = this.props.navigation;
     navigate("Welcome");
@@ -70,13 +82,13 @@ export default class PrePagoDashBoard extends Component{
             </View>
             <View style={styles.clientDetails}>
                 <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
-                <Text style={{color:'white', fontSize:24, fontWeight:'bold', marginLeft:8, marginLeft:32}}>Olegario Mariquele</Text>
-                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: 0120033004444</Text>
-                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: Av. 24 de Julho, nr. 2930</Text>
+                <Text style={{color:'white', fontSize:24, fontWeight:'bold', marginLeft:8, marginLeft:32}}>{this.props.store.customerName}</Text>
+                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: {this.props.store.meterNumber}</Text>
+                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: {this.props.store.customerAddress}</Text>
             </View>
         </View>
         <View style={styles.centerView}>
-              <TouchableOpacity style={styles.actionButton1}><Text style={styles.buttonTxt}>Comprar Água</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.PrePagoPayment} style={styles.actionButton1}><Text style={styles.buttonTxt}>Comprar Água</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton2}><Text style={styles.buttonTxt}>Pagar Dívidas</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton3}><Text style={styles.buttonTxt}>Reclamações</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton4}><Text style={styles.buttonTxt3}>Histórico de Compras</Text></TouchableOpacity>
