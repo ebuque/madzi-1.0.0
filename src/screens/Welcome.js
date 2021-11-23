@@ -172,8 +172,8 @@ const styles = StyleSheet.create({
   }, 
    loginButton :{
     top:"15%",
-    width:300,
-    height:55,
+    width:width/1.3,
+    height:height/12,
     borderRadius:100,
     backgroundColor:"white",
     

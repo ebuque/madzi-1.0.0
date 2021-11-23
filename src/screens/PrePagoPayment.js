@@ -10,7 +10,8 @@ import {
   Keyboard,
   TouchableOpacity,
   ActivityIndicator,
-  ScrollView
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView
 } from "react-native";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 const width = Math.round(Dimensions.get("window").width);
@@ -29,6 +30,7 @@ export default class PrePagoPayment extends Component{
     isLoading:false,
     };
   }
+  
   componentDidMount() {}
 
 
@@ -54,8 +56,11 @@ export default class PrePagoPayment extends Component{
   return (
 
 
-    <SafeAreaView style={styles.container}>
-
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.header}>
           <View style={styles.backAndProfile}>
               <View style={styles.backIcon}>
@@ -66,7 +71,7 @@ export default class PrePagoPayment extends Component{
               </View>
               <View style={styles.profile}>
                   <View style={styles.circleView}>
-                  <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>{this.props.store.user.match(/\b\w/g).join('')}</Text></View>
+                  <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>{this.props.store.user.charAt(0)}</Text></View>
                   </View>
                   <Text style={styles.userName}>{this.props.store.user}</Text>
                   <Text style={styles.userEmail}>{this.props.store.email}</Text>
@@ -130,7 +135,8 @@ export default class PrePagoPayment extends Component{
           <View style={styles.footerLogo}>
              <Image style={styles.imgFooterLogo} source={require('../../assets/img/fipagmadzi.png')}/>
           </View>
-    </SafeAreaView>
+          </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
   }
 }
