@@ -92,27 +92,13 @@ export default class PrePagoPayment extends Component{
           <View style={styles.viewAmountInputs}>
            <TextInput
             style={styles.amountValue}
-            placeholder="1024"
+            placeholder="1024.00"
             onChangeText={(text) => this.setState({ amount:text })}
             defaultValue={this.state.amount}
             keyboardType="numeric"
             maxLength={5}
           />
-          <Text style={styles.dot}>.</Text>
-          <SmoothPinCodeInput
-                cellSize={20}
-                codeLength={2}
-                textStyle={{
-                  fontSize: 24,
-                  color: '#454F5A'
-                }}
-                autoFocus={false}
-                animated={false}
-                cellStyle={styles.decimals}
-                value={this.state.decimal}
-                onTextChange={(decimal) => this.setState({ decimal:decimal })}
-                onFulfill={Keyboard.dismiss}
-              />
+        
         </View>
         </View>
 
@@ -151,7 +137,7 @@ const styles = StyleSheet.create({
   },
   amountValue:{
     backgroundColor:"#454F5A",
-    width:width/2,
+    width:width/1.7,
     height:height/16,
     borderRadius:9,
     fontSize:26,
