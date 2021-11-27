@@ -56,11 +56,8 @@ export default class PrePagoPayment extends Component{
   return (
 
 
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <SafeAreaView style={styles.container} onPress={Keyboard.dismiss}> 
+
         <View style={styles.header}>
           <View style={styles.backAndProfile}>
               <View style={styles.backIcon}>
@@ -109,7 +106,7 @@ export default class PrePagoPayment extends Component{
             <Text style={styles.lblPaymentBtn}>M-pesa</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.paymentButtonsCM}>
-            <Text style={styles.lblPaymentBtn}>Conta Movel</Text>
+            <Text style={styles.lblPaymentBtn}>Conta Móvel</Text>
           </TouchableOpacity>
           </View>
           <View style={styles.viewSecondRow}>
@@ -121,8 +118,7 @@ export default class PrePagoPayment extends Component{
           <View style={styles.footerLogo}>
              <Image style={styles.imgFooterLogo} source={require('../../assets/img/fipagmadzi.png')}/>
           </View>
-          </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   );
   }
 }
@@ -131,19 +127,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fafbfc',
-    alignItems: 'center',
-    height: height,
-    
+    alignItems: 'center',    
   },
   amountValue:{
     backgroundColor:"#454F5A",
-    width:width/1.7,
+    width:width * 0.5,
     height:height/16,
     borderRadius:9,
     fontSize:26,
     alignItems:'center',
-    justifyContent:'center'
-    
+    justifyContent:'center',
+    color: "white"
   },
   decimals:{
     backgroundColor:"#454F5A",
@@ -168,7 +162,7 @@ const styles = StyleSheet.create({
     color:"#05185E"
   },
   lblPaymentBtn:{
-    fontSize:26,
+    fontSize:height * 0.03,
     fontWeight:"bold",
     color:"white"
   },
@@ -240,7 +234,7 @@ const styles = StyleSheet.create({
   },
   header:{
     width:width -30,
-    height: height/2.4,
+    height: height * 0.3,
     justifyContent:'center',
     backgroundColor:"#00035c",
     width:'100%',
@@ -323,14 +317,6 @@ const styles = StyleSheet.create({
     fontSize:14,
     paddingRight:5,
     paddingLeft:5,
-  },
-  buttonTxt:{
-    color: "white",
-    fontSize: 20,
-  },
-  buttonTxt3:{
-    color: "#05185e",
-    fontSize: 20,
   },
   logoView:{
     width:80,
