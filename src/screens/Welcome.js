@@ -57,6 +57,7 @@ export default class Welcome extends Component{
       alert("Erro: "+e);
       return { error: true };
     }
+    
 
   };
 
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#00035c',
     alignItems: 'center',
-    height: height,
+
     
   },
   body:{
@@ -126,27 +127,27 @@ const styles = StyleSheet.create({
   },
   welcome:{
       color: "white",
-      fontSize: 24,
+      fontSize: width * 0.06,
       fontWeight: 'bold'
   },
   welcomeBottom:{
     color: "white",
-      fontSize: 34,
+      fontSize: width * 0.06,
       fontWeight: 'bold'
   },
   buttonMSG:{
       color: "#00035c",
-      fontSize: 18,
+      fontSize: width * 0.05,
   },
   welcomeDesc:{
     color: "white",
-    fontSize: 18,
+    fontSize: width * 0.045,
     marginTop:30,
   },
   welcomeMsg: {
     top:"10%",
-    width:width-70,
-    height:200,
+    width:width*0.8,
+    height:height * 0.3,
     alignItems:'center',
     justifyContent: 'center',
   },
@@ -154,21 +155,27 @@ const styles = StyleSheet.create({
     top:"10%",
     borderColor:"white",
     borderWidth: 1,
-    width:200,
-    height:200,
-    borderRadius: 200/2,
+    width:width * 0.45,
+    height:width * 0.45,
+    borderRadius: (width * 0.45)/2,
     alignItems:'center',
     justifyContent: 'center',
   },
     logoIn:{
     borderColor:"white",
     borderWidth: 1,
-    width:180,
-    height:180,
-    borderRadius: 180/2,
+    width:width * 0.4,
+    height:width * 0.4,
+    borderRadius: (width * 0.4)/2,
     backgroundColor:"white",
     alignItems:'center',
     justifyContent:'center'
+  },
+  logoImg:{
+  flex:1,
+  resizeMode:"contain",
+  width:"100%",
+  height:"100%"
   }, 
    loginButton :{
     top:"15%",
@@ -180,7 +187,7 @@ const styles = StyleSheet.create({
   },
   footerLogo:{
     position: 'absolute',
-    bottom:'5%',
+    bottom:'2%', 
     width:130,
     height:40,
     alignItems: 'center',
