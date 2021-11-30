@@ -15,6 +15,8 @@ import {
   ScrollView
 } from "react-native";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
+import { Client } from "@paymentsds/mpesa"
+import {MPESA_API_KEY, MPESA_SERVICE_PROVIDER_CODE, MPESA_PUBLIC_KEY} from '@env';
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
 
@@ -39,6 +41,28 @@ export default class MPesa extends Component{
     const { navigate } = this.props.navigation;
     navigate("PrePago");
   };
+
+   Mpesa = ()=>{
+    const client = new Client({
+      apiKey: MPESA_API_KEY, // API Key
+      publicKey: MPESA_PUBLIC_KEY, // Public Key
+      serviceProviderCode: MPESA_SERVICE_PROVIDER_CODE, // input_ServiceProviderCode
+    })
+    const paymentData = {
+      from: "847283210", // input_CustomerMSISDN
+      reference: "11114", // input_ThirdPartyReference
+      transation: "T12344CC", // input_TransactionReference
+      amount: "10", // input_Amount
+    }
+    client
+      .receive(paymentData)
+      .then(r => {
+        console.log(r.data)
+      })
+      .catch(e => {
+        console.log(e)
+      })
+   }
 
   Logout = () =>{
     const { navigate } = this.props.navigation;
@@ -97,7 +121,7 @@ export default class MPesa extends Component{
           <Text style={styles.lblPayments}>Pagar com:</Text>
          
           <View style={styles.viewSecondRow}>
-          <TouchableOpacity style={styles.paymentButtonsCD}>
+          <TouchableOpacity style={styles.paymentButtonsCD} onPress={this.Mpesa}>
             <Text style={styles.lblPaymentBtn}>Continuar</Text>
           </TouchableOpacity>
           </View>
@@ -133,7 +157,8 @@ const styles = StyleSheet.create({
     backgroundColor:"#00035c",
     width:width,
     borderBottomRightRadius:height*0.06,
-    borderBottomLeftRadius:height*0.06
+    borderBottomLeftRadius:height*0.06,
+    marginTop:height*0.05
   },
   centerView:{
     width:width*0.95,

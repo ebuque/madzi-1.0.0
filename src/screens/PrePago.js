@@ -90,7 +90,7 @@ export default class PrePago extends Component{
         </View>)
     } else 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} onPress={Keyboard.dismiss}>
 
         <View style={styles.header}>
               <View style={styles.homeIcon}>
@@ -123,7 +123,7 @@ export default class PrePago extends Component{
                  
                 }}
                 textStyle={{
-                  fontSize: 24,
+                  fontSize: height*0.05,
                   color: '#05185e'
                 }}
                 autoFocus={false}
@@ -159,23 +159,29 @@ const styles = StyleSheet.create({
   },
   header:{
     width:width*0.9,
-    height: height*0.25,
+    height: height*0.20,
     justifyContent:'center',
     flexDirection:"row",
-    marginTop:-height*0.04
+    marginTop:height*0.05,
+    backgroundColor:'yellow'
   },
   centerView:{
-    width:width*0.9,
-    height:height*0.3,
+   
     alignItems: 'center',
-	  top:height*0.05
+
+    width:width*0.9,
+    height: height*0.40,
+    justifyContent:'center',
+    flex:-1,
+    backgroundColor:'pink',
   },
   buttonsView:{
     width:width*0.9,
    height:height*0.1,
    alignItems: 'center',
    justifyContent:'center',
-	 marginTop:height*0.025
+   backgroundColor:"green",
+   flex:0
 	 
   },
   footerLogo:{
@@ -186,11 +192,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding:8
   },
-  btnLogo:{
-    color: "#00035c",
-    fontSize: 34,
-    fontWeight: 'bold'
-  },
+  
   continueButtonn:{
     backgroundColor:"#05185e",
     width:width*0.55,
@@ -237,20 +239,13 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
     margin:height*0.04,
-    marginTop:-50
   },
   lblNrContador:{
     color:"#05185e",
-    fontSize:24,
+    fontSize:height*0.04,
     fontWeight:"bold",
     margin:22,
-    marginLeft:-130
-  },
-  appName:{
-    color:"#05185e",
-    fontSize:34,
-    fontWeight:"bold",
-    marginBottom:-100
+    marginLeft:-height*0.18
   },
   circleView:{
     borderWidth:1,
@@ -289,11 +284,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    width: width-30,
-		height:80,
+    width: width*0.88,
+		height:height*0.10,
 		borderWidth:2,
 		borderColor:"#05185e",
-		borderRadius:16
+		borderRadius:16,
+    
   },
 	txtMainMenu:{
 		color:"#05185e",
@@ -301,13 +297,17 @@ const styles = StyleSheet.create({
     marginBottom:-10,
     marginLeft:5
 	},
-  homeSvg:{
-    width:25,
-    height:25
-  },
+  
   input: {
-    borderBottomWidth: 2,
-    height:40,
-    width:22
-    } 
+    borderBottomWidth: 1.5,
+    height:height*0.08,
+    width:width*0.055
+    },
+    homeSvg:{
+      width:width*0.05,
+      height:height*0.05,
+      flex:-1,
+      backgroundColor:'green',
+      padding:height*0.04
+    }
 });

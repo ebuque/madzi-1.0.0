@@ -155,7 +155,8 @@ const styles = StyleSheet.create({
     backgroundColor:"#00035c",
     width:width,
     borderBottomRightRadius:height*0.06,
-    borderBottomLeftRadius:height*0.06
+    borderBottomLeftRadius:height*0.06,
+    marginTop:height*0.05
   },
   centerView:{
     width:width,

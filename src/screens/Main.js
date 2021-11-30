@@ -128,27 +128,31 @@ const styles = StyleSheet.create({
   },
   header:{
     width:width*0.9,
-    height: height*0.25,
+    height: height*0.20,
     justifyContent:'center',
     flexDirection:"row-reverse",
+    marginTop:height*0.05,
+  
   },
   centerView:{
-    width:width-30,
+    width:width*0.9,
     height:height*0.30,
     alignItems: 'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    
+    
   },
   buttonsView:{
-
+   width:width*0.9,
    height:height*0.25,
    alignItems: 'center',
    justifyContent:'center',
-   marginTop:0
+   marginTop:0,
   },
   footerLogo:{
     position: 'absolute',
-    bottom:'5%',
-    width:130,
+    bottom:height*0.03,
+    width:height*0.001,
     height:40,
     alignItems: 'center',
     padding:8
@@ -194,17 +198,16 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
     marginTop:-(width * 0.01),
-    margin:8
   },
   appNameDesc:{
     color:"#05185e",
     fontSize:width * 0.05,
     fontWeight:"bold",
-    margin:width * 0.05,
+    margin:width * 0.02,
   },
   appName:{
     color:"#05185e",
-    fontSize:width * 0.1,
+    fontSize:width * 0.08,
     fontWeight:"bold",
     
   },
