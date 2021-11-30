@@ -10,8 +10,6 @@ import {
   Keyboard,
   TouchableOpacity,
   ActivityIndicator,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
   ScrollView
 } from "react-native";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
