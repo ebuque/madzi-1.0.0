@@ -155,27 +155,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fafbfc',
     alignItems: 'center',
-    height: height,
     
   },
   header:{
-    width:width -30,
-    height: "25%",
+    width:width*0.9,
+    height: height*0.25,
     justifyContent:'center',
     flexDirection:"row",
+    marginTop:-height*0.04
   },
   centerView:{
-    width:width-30,
-    height:"30%",
+    width:width*0.9,
+    height:height*0.3,
     alignItems: 'center',
-	  top:80
+	  top:height*0.05
   },
   buttonsView:{
-   width:width-30,
-   height:"10%",
+    width:width*0.9,
+   height:height*0.1,
    alignItems: 'center',
    justifyContent:'center',
-	 marginTop:60
+	 marginTop:height*0.025
 	 
   },
   footerLogo:{
@@ -193,13 +193,13 @@ const styles = StyleSheet.create({
   },
   continueButtonn:{
     backgroundColor:"#05185e",
-    width:"55%",
-    height:80,
-    margin: 32,
-    borderRadius:80/2,
+    width:width*0.55,
+    height:height*0.1,
+    margin: height*0.05,
+    borderRadius:height*0.1/2,
     alignItems:'center',
     justifyContent:'center',
-    marginBottom:-80
+    marginBottom:-height*0.1
   },
   mainMenu:{
     alignItems:"center",
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
 		flexDirection:"row",
 		padding:12,
 		position: 'absolute',
-		top: 75,
+		top: height*0.09,
   },
 	homeIcon:{
 		padding:12,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
 		marginRight:20
 	},
   profile:{
-    marginLeft:160,
+    marginLeft:height*0.20,
     alignItems:"center",
     justifyContent:"center",
 		padding:10,
@@ -232,11 +232,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   logoView:{
-    width:80,
-    height:80,
+    width:height*0.1,
+    height:height*0.1,
     alignItems:"center",
     justifyContent:"center",
-    margin:32,
+    margin:height*0.04,
     marginTop:-50
   },
   lblNrContador:{

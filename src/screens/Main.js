@@ -127,23 +127,23 @@ const styles = StyleSheet.create({
     
   },
   header:{
-    width:width -30,
-    height: "25%",
+    width:width*0.9,
+    height: height*0.25,
     justifyContent:'center',
     flexDirection:"row-reverse",
   },
   centerView:{
     width:width-30,
-    height:"30%",
+    height:height*0.30,
     alignItems: 'center',
     justifyContent:'center'
   },
   buttonsView:{
-   width:width-30,
-   height:"35%",
+
+   height:height*0.25,
    alignItems: 'center',
    justifyContent:'center',
-   marginTop:-20
+   marginTop:0
   },
   footerLogo:{
     position: 'absolute',
@@ -153,34 +153,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding:8
   },
-  btnLogo:{
-    color: "#00035c",
-    fontSize: 34,
-    fontWeight: 'bold'
-  },
   prePaidButton:{
     backgroundColor:"#05185e",
-    width:"95%",
-    height:80,
+    width:width * 0.90,
+    height:height*0.10,
     margin: 8,
-    borderRadius:80/2,
+    borderRadius:height*0.10/2,
     alignItems:'center',
     justifyContent:'center'
   },
   postPaidButton:{
     backgroundColor:"#2191ff",
-    width:"95%",
-    height:80,
+    width:width * 0.90,
+    height:height*0.10,
     margin: 8,
-    borderRadius:80/2,
+    borderRadius:height*0.10/2,
     alignItems:'center',
     justifyContent:'center'
   },
   profile:{
-    marginLeft:160,
+    marginLeft:width*0.45,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:-50
+    marginTop:-height*0.05
   },
   logOutTxt:{
     color:"white",
@@ -191,53 +186,53 @@ const styles = StyleSheet.create({
   },
   buttonTxt:{
     color: "white",
-    fontSize: 20,
+    fontSize: height*0.03,
   },
   logoView:{
-    width:50,
-    height:50,
+    width:width * 0.30,
+    height:height * 0.15,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:-80,
+    marginTop:-(width * 0.01),
     margin:8
   },
   appNameDesc:{
     color:"#05185e",
-    fontSize:18,
+    fontSize:width * 0.05,
     fontWeight:"bold",
-    margin:32
+    margin:width * 0.05,
   },
   appName:{
     color:"#05185e",
-    fontSize:34,
+    fontSize:width * 0.1,
     fontWeight:"bold",
-    marginBottom:-100
+    
   },
   circleView:{
     borderWidth:1,
     borderColor:"#2191ff",
-    height: 40,
-    width: 40,
-    borderRadius:40/2,
+    height: height*0.05,
+    width: height*0.05,
+    borderRadius:height*0.05/2,
     alignItems:'center',
     justifyContent:'center'
   },
   profilePhoto:{
-    height: 35,
-    width: 35,
-    borderRadius:35/2,
+    height: height*0.04,
+    width: height*0.04,
+    borderRadius:height*0.04/2,
     alignItems:'center',
     justifyContent:'center',
     backgroundColor:"#2191ff",
   },
   initialLetterIfNoPhoto:{
     color:"white",
-    fontSize:18,
+    fontSize:height*0.024,
     fontWeight:"bold"
   },
   logOut:{
     backgroundColor:"red",
-    borderRadius:40,
+    borderRadius:height*0.05,
   },
   userName:{
     fontWeight:"bold"

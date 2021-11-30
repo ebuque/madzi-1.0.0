@@ -11,7 +11,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   TouchableWithoutFeedback,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  ScrollView
 } from "react-native";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 const width = Math.round(Dimensions.get("window").width);
@@ -83,38 +84,26 @@ export default class MPesa extends Component{
             </View>
         </View>
 
-
+    <ScrollView style={styles.centerView}>
+      <View style={{alignItems:'center'}}>
         <View style={styles.viewAmount}>
-          <Text style={styles.lblAmount}>Insira o valor</Text>
+          <Text style={styles.lblAmount}>Total a Pagar</Text>
           <View style={styles.viewAmountInputs}>
-           <TextInput
-            style={styles.amountValue}
-            placeholder="1024.00"
-            onChangeText={(text) => this.setState({ amount:text })}
-            defaultValue={this.state.amount}
-            keyboardType="numeric"
-            maxLength={5}
-          />
-        
+          <Text style={styles.payAmount}>{this.props.store.paymentAmount}</Text>
         </View>
         </View>
 
         <View style={styles.viewPaymentSystems}>
           <Text style={styles.lblPayments}>Pagar com:</Text>
-          <View style={styles.viewFirstRow}>
-          <TouchableOpacity style={styles.paymentButtonsMP}>
-            <Text style={styles.lblPaymentBtn}>M-pesa</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.paymentButtonsCM}>
-            <Text style={styles.lblPaymentBtn}>Conta Móvel</Text>
-          </TouchableOpacity>
-          </View>
+         
           <View style={styles.viewSecondRow}>
           <TouchableOpacity style={styles.paymentButtonsCD}>
-            <Text style={styles.lblPaymentBtn}>Cartão de Credito/Debito</Text>
+            <Text style={styles.lblPaymentBtn}>Continuar</Text>
           </TouchableOpacity>
           </View>
         </View>
+        </View>
+        </ScrollView>
           <View style={styles.footerLogo}>
              <Image style={styles.imgFooterLogo} source={require('../../assets/img/fipagmadzi.png')}/>
           </View>
@@ -127,125 +116,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fafbfc',
-    alignItems: 'center',    
+    alignItems: 'center',
+    
   },
-  amountValue:{
-    backgroundColor:"#454F5A",
-    width:width * 0.5,
-    height:height/16,
-    borderRadius:9,
-    fontSize:26,
-    alignItems:'center',
-    justifyContent:'center',
-    color: "white"
-  },
-  decimals:{
-    backgroundColor:"#454F5A",
-    width:width/8,
-    height:height/16,
-    borderRadius:9,
-    fontSize:26,
-    alignItems:'center',
-    justifyContent:'center',
-    margin:16
-  },
-  lblAmount:{
-    fontSize:26,
-    fontWeight:"bold",
-    marginTop:10,
-    marginLeft:16,
-  },
-  lblPayments:{
-    fontSize:26,
-    fontWeight:"bold",
-    marginLeft:16,
-    color:"#05185E"
-  },
-  lblPaymentBtn:{
-    fontSize:height * 0.03,
-    fontWeight:"bold",
-    color:"white"
-  },
-  viewAmountInputs:{
-    width:width-30,
-    height: height/8,
-    flexDirection:"row",
-    color:"#202121"
-  },
-  dot:{
-    fontSize:80,
-    marginTop:-40,
-    color:"#202121"
-  },
-  viewFirstRow:{
-    width:width-30,
-    alignItems:'center',
-    justifyContent:"center",
-    height: height/8,
-    flexDirection:"row",
-    margin:8
-  },
-  viewSecondRow:{
-    width:width-30,
-    alignItems:'center',
-    justifyContent:"center",
-    height: height/10,
-    margin:8,
-    marginTop:4
-  },
-   paymentButtonsCD:{
-      backgroundColor:"#05185E",
-      height:"100%",
-      width:"100%",
-      borderRadius:16,
-      justifyContent:"center",
-      alignItems:"center"
-   },
-   paymentButtonsMP:{
-      backgroundColor:"#191818",
-      height:"100%",
-      width:"50%",
-      borderRadius:16,
-      justifyContent:"center",
-      alignItems:"center",
-      marginRight:8
-   },
-   paymentButtonsCM:{
-      backgroundColor:"#3B8BD8",
-      height:"100%",
-      width:"50%",
-      borderRadius:16,
-      justifyContent:"center",
-      alignItems:"center",
-   },
-   viewPaymentSystems:{
-     backgroundColor:"white",
-     padding:16,
-     borderTopRightRadius:50,
-     borderTopLeftRadius:50
-   },
   backAndProfile:{
     flexDirection:"row",
-    height:'40%'
+    height:height*0.1
   },
   clientDetails:{
-    height:'60%',
-    flexDirection:'column',
+    height:height*0.2,
+    flexDirection:'column'
   },
   header:{
-    width:width -30,
-    height: height * 0.3,
+    height: height*0.3,
     justifyContent:'center',
     backgroundColor:"#00035c",
-    width:'100%',
-    borderBottomRightRadius:50,
-    borderBottomLeftRadius:50
+    width:width,
+    borderBottomRightRadius:height*0.06,
+    borderBottomLeftRadius:height*0.06
   },
   centerView:{
-    width:width-30,
-    height:"30%",
-    alignItems: 'center',
-	  top:80
+    width:width*0.95,
+	  top:-height*0.05,
+    paddingTop:height*0.135,
+    zIndex: -3,
+    elevation:-3
   },
   footerLogo:{
     position: 'absolute',
@@ -255,44 +150,39 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding:8
   },
-  btnLogo:{
-    color: "#00035c",
-    fontSize: 34,
-    fontWeight: 'bold'
-  },
   actionButton1:{
     backgroundColor:"#05185e",
-    width:"95%",
-    height:60,
-    marginTop: -40,
-    borderRadius:80/2,
+    width:width*0.90,
+    height:height*0.1,
+    marginTop: -height*0.05,
+    borderRadius:height*0.1/2,
     alignItems:'center',
     justifyContent:'center'
   },
     actionButton2:{
     backgroundColor:"#2190fe",
-    width:"95%",
-    height:60,
-    borderRadius:80/2,
+    width:width*0.90,
+    height:height*0.1,
+    borderRadius:height*0.1/2,
     alignItems:'center',
     justifyContent:'center',
     margin:16
   },
     actionButton3:{
     backgroundColor:"#b8c8e2",
-    width:"95%",
-    height:60,
-    borderRadius:80/2,
+    width:width*0.90,
+    height:height*0.1,
+    borderRadius:height*0.1/2,
     alignItems:'center',
     justifyContent:'center'
   },
     actionButton4:{
     backgroundColor:"#fbfbfd",
-    width:"95%",
+    width:width*0.90,
+    height:height*0.1,
     borderWidth:1,
     borderColor:'#2190fe',
-    height:60,
-    borderRadius:80/2,
+    borderRadius:height*0.1/2,
     alignItems:'center',
     justifyContent:'center',
     margin:16
@@ -303,38 +193,34 @@ const styles = StyleSheet.create({
 		flexDirection:"row",
 		padding:12,
 		position: 'absolute',
-		top: 75,
+		top: height*0.09,
   },
   profile:{
-    marginLeft:160,
+    marginLeft:height*0.20,
     alignItems:"center",
     justifyContent:"center",
 		padding:10,
-		marginRight:-10
+		marginTop:height*0.05,
   },
   logOutTxt:{
     color:"white",
-    fontSize:14,
+    fontSize:height*0.014,
     paddingRight:5,
     paddingLeft:5,
   },
+  buttonTxt:{
+    color: "white",
+    fontSize: height*0.03,
+  },
+  buttonTxt3:{
+    color: "#05185e",
+    fontSize: height*0.03,
+  },
   logoView:{
-    width:80,
-    height:80,
+    width:height*0.1,
+    height:height*0.1,
     alignItems:"center",
     justifyContent:"center"
-  },
-  lblNrContador:{
-    color:"#05185e",
-    fontSize:18,
-    fontWeight:"bold",
-    margin:8
-  },
-  appName:{
-    color:"#05185e",
-    fontSize:34,
-    fontWeight:"bold",
-    marginBottom:-100
   },
   circleView:{
     borderWidth:1,
@@ -364,11 +250,11 @@ const styles = StyleSheet.create({
   },
   userName:{
     fontWeight:"bold",
-		fontSize:13,
+		fontSize:height*0.025,
     color:"white"
   },
 	userEmail:{
-		fontSize:12,
+		fontSize:height*0.015,
     color:"white"
 	},
 	txtMainMenu:{
@@ -387,5 +273,4 @@ const styles = StyleSheet.create({
     width:25,
     height:25
   }
-  
 });

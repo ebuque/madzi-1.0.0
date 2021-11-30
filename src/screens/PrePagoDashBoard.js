@@ -7,7 +7,8 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  ScrollView
 } from "react-native";
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
@@ -81,18 +82,20 @@ export default class PrePagoDashBoard extends Component{
               </View>
             </View>
             <View style={styles.clientDetails}>
-                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
-                <Text style={{color:'white', fontSize:24, fontWeight:'bold', marginLeft:8, marginLeft:32}}>{this.props.store.customerName}</Text>
-                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: {this.props.store.meterNumber}</Text>
-                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: {this.props.store.customerAddress}</Text>
+                <Text style={{color:'#2190fe', fontSize:height*0.025, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
+                <Text style={{color:'white', fontSize:height*0.030, fontWeight:'bold', marginLeft:8, marginLeft:32}}>{this.props.store.customerName}</Text>
+                <Text style={{color:'#2190fe', fontSize:height*0.025, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: {this.props.store.meterNumber}</Text>
+                <Text style={{color:'#2190fe', fontSize:height*0.025, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: {this.props.store.customerAddress}</Text>
             </View>
         </View>
-        <View style={styles.centerView}>
+        <ScrollView style={styles.centerView}>
+          <View style={{alignItems:'center'}}>
               <TouchableOpacity onPress={this.PrePagoPayment} style={styles.actionButton1}><Text style={styles.buttonTxt}>Comprar Água</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton2}><Text style={styles.buttonTxt}>Pagar Dívidas</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton3}><Text style={styles.buttonTxt}>Reclamações</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton4}><Text style={styles.buttonTxt3}>Histórico de Compras</Text></TouchableOpacity>
-        </View>
+          </View>
+        </ScrollView>
        
           <View style={styles.footerLogo}>
              <Image style={styles.imgFooterLogo} source={require('../../assets/img/footer-logo-blue.png')}/>
@@ -107,31 +110,30 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fafbfc',
     alignItems: 'center',
-    height: height,
     
   },
   backAndProfile:{
     flexDirection:"row",
-    height:'40%'
+    height:height*0.1
   },
   clientDetails:{
-    height:'60%',
+    height:height*0.2,
     flexDirection:'column'
   },
   header:{
-    width:width -30,
-    height: "45%",
+    height: height*0.3,
     justifyContent:'center',
     backgroundColor:"#00035c",
-    width:'100%',
-    borderBottomRightRadius:50,
-    borderBottomLeftRadius:50
+    width:width,
+    borderBottomRightRadius:height*0.06,
+    borderBottomLeftRadius:height*0.06
   },
   centerView:{
-    width:width-30,
-    height:"30%",
-    alignItems: 'center',
-	  top:80
+    width:width*0.95,
+	  top:-height*0.05,
+    paddingTop:height*0.135,
+    zIndex: -3,
+    elevation:-3
   },
   footerLogo:{
     position: 'absolute',
@@ -141,44 +143,39 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding:8
   },
-  btnLogo:{
-    color: "#00035c",
-    fontSize: 34,
-    fontWeight: 'bold'
-  },
   actionButton1:{
     backgroundColor:"#05185e",
-    width:"95%",
-    height:60,
-    marginTop: -40,
-    borderRadius:80/2,
+    width:width*0.90,
+    height:height*0.1,
+    marginTop: -height*0.05,
+    borderRadius:height*0.1/2,
     alignItems:'center',
     justifyContent:'center'
   },
     actionButton2:{
     backgroundColor:"#2190fe",
-    width:"95%",
-    height:60,
-    borderRadius:80/2,
+    width:width*0.90,
+    height:height*0.1,
+    borderRadius:height*0.1/2,
     alignItems:'center',
     justifyContent:'center',
     margin:16
   },
     actionButton3:{
     backgroundColor:"#b8c8e2",
-    width:"95%",
-    height:60,
-    borderRadius:80/2,
+    width:width*0.90,
+    height:height*0.1,
+    borderRadius:height*0.1/2,
     alignItems:'center',
     justifyContent:'center'
   },
     actionButton4:{
     backgroundColor:"#fbfbfd",
-    width:"95%",
+    width:width*0.90,
+    height:height*0.1,
     borderWidth:1,
     borderColor:'#2190fe',
-    height:60,
-    borderRadius:80/2,
+    borderRadius:height*0.1/2,
     alignItems:'center',
     justifyContent:'center',
     margin:16
@@ -189,46 +186,34 @@ const styles = StyleSheet.create({
 		flexDirection:"row",
 		padding:12,
 		position: 'absolute',
-		top: 75,
+		top: height*0.09,
   },
   profile:{
-    marginLeft:160,
+    marginLeft:height*0.20,
     alignItems:"center",
     justifyContent:"center",
 		padding:10,
-		marginRight:-10
+		marginTop:height*0.05,
   },
   logOutTxt:{
     color:"white",
-    fontSize:14,
+    fontSize:height*0.014,
     paddingRight:5,
     paddingLeft:5,
   },
   buttonTxt:{
     color: "white",
-    fontSize: 20,
+    fontSize: height*0.03,
   },
   buttonTxt3:{
     color: "#05185e",
-    fontSize: 20,
+    fontSize: height*0.03,
   },
   logoView:{
-    width:80,
-    height:80,
+    width:height*0.1,
+    height:height*0.1,
     alignItems:"center",
     justifyContent:"center"
-  },
-  lblNrContador:{
-    color:"#05185e",
-    fontSize:18,
-    fontWeight:"bold",
-    margin:8
-  },
-  appName:{
-    color:"#05185e",
-    fontSize:34,
-    fontWeight:"bold",
-    marginBottom:-100
   },
   circleView:{
     borderWidth:1,
@@ -258,11 +243,11 @@ const styles = StyleSheet.create({
   },
   userName:{
     fontWeight:"bold",
-		fontSize:13,
+		fontSize:height*0.025,
     color:"white"
   },
 	userEmail:{
-		fontSize:12,
+		fontSize:height*0.015,
     color:"white"
 	},
 	txtMainMenu:{
