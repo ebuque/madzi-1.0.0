@@ -13,8 +13,6 @@ import {
   ScrollView
 } from "react-native";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
-import { Client } from "@paymentsds/mpesa"
-import {MPESA_API_KEY, MPESA_SERVICE_PROVIDER_CODE, MPESA_PUBLIC_KEY} from '@env';
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
 
@@ -41,25 +39,35 @@ export default class MPesa extends Component{
   };
 
    Mpesa = ()=>{
-    const client = new Client({
-      apiKey: MPESA_API_KEY, // API Key
-      publicKey: MPESA_PUBLIC_KEY, // Public Key
-      serviceProviderCode: MPESA_SERVICE_PROVIDER_CODE, // input_ServiceProviderCode
-    })
-    const paymentData = {
-      from: "847283210", // input_CustomerMSISDN
-      reference: "11114", // input_ThirdPartyReference
-      transation: "T12344CC", // input_TransactionReference
-      amount: "10", // input_Amount
-    }
-    client
-      .receive(paymentData)
-      .then(r => {
-        console.log(r.data)
+    this.setState({ isLoading: true }); 
+    fetch(`${this.props.store.mpesaApiEndpoint}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+      "authRequest":{"apiKey": this.props.store.eKey,
+      "appId": this.props.store.eld}, 
+      "amount":250, 
+      "msisdn": '258847283210', 
+      "reference": '0120033004444', 
+      "sessionInformation":{"sessionId": this.props.store.sessionId,"userRequest": {"userId": this.props.store.userId}} 
       })
-      .catch(e => {
-        console.log(e)
-      })
+    }).then((response )=> response.json()).then(
+      (json)=> {
+        this.setState({ isLoading: false });
+        console.log(json)
+       return
+    }).catch((error) => {
+      this.setState({isLoading: false, message: "Desculpa, estamos a enfrentar alguns problemas ⚒️"})
+      alert(this.state.message + error)
+    }).finally(() => {
+      this.setState({ isLoading: false });
+    });
+
+
+
    }
 
   Logout = () =>{
@@ -119,7 +127,7 @@ export default class MPesa extends Component{
           <Text style={styles.lblPayments}>Pagar com:</Text>
          
           <View style={styles.viewSecondRow}>
-          <TouchableOpacity style={styles.paymentButtonsCD} onPress={this.Mpesa}>
+          <TouchableOpacity style={styles.paymentButtonsCD} onPress={this.Mpesa()}>
             <Text style={styles.lblPaymentBtn}>Continuar</Text>
           </TouchableOpacity>
           </View>

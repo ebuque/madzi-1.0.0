@@ -16,7 +16,6 @@
   "dependencies": {
     "@builderx/utils": "~0.1.7",
     "@expo/vector-icons": "^12.0.5",
-    "@paymentsds/mpesa": "^0.1.0-alpha-9",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "axios": "^0.24.0",
