@@ -15,6 +15,7 @@ import PrePago from "./src/screens/PrePago";
 import PrePagoDashBoard from './src/screens/PrePagoDashBoard';
 import PrePagoPayment from './src/screens/PrePagoPayment';
 import MPesa from "./src/screens/MPesa";
+import PaymentDone from "./src/screens/PaymentDone"
 
 //Import store
 import store from "./src/store";
@@ -25,6 +26,7 @@ const DrawerNavigation = createDrawerNavigator({
   PrePagoDashBoard: PrePagoDashBoard,
   PrePagoPayment:PrePagoPayment,
   MPesa:MPesa,
+  PaymentDone:PaymentDone,
   });
 
 const StackNavigation = createStackNavigator(
@@ -38,6 +40,7 @@ const StackNavigation = createStackNavigator(
     PrePagoDashBoard: PrePagoDashBoard,
     PrePagoPayment:PrePagoPayment,
     MPesa:MPesa,
+    PaymentDone:PaymentDone,
   },
   {
     headerMode: "none",

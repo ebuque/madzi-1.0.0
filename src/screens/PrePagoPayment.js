@@ -41,9 +41,30 @@ export default class PrePagoPayment extends Component{
   };
 
   Mpesa = () =>{
-    this.props.store.addValue('paymentAmount', this.state.amount);
-    const {navigate} = this.props.navigation;
-    navigate("MPesa");
+
+    this.setState({isLoading: true})
+    fetch('https://google.com', /** Just to fetch something, in order to have processing time */ {
+        method: 'GET',
+        headers: {
+          Accept: 'application/html',
+          'Content-Type': 'application/html'
+        }
+    }).then((response )=> response.json()).then(
+        (json)=> {
+      
+          this.setState({isLoading: false})
+          
+          const {navigate} = this.props.navigation;
+          navigate("MPesa");      
+      }).catch((error) => {
+        this.setState({isLoading: false})
+        const { navigate } = this.props.navigation;
+        navigate("MPesa")
+      }).finally(() => {
+        this.setState({ isLoading: false });
+        const { navigate } = this.props.navigation;
+        navigate("MPesa")
+      });
   };
   Logout = () =>{
     const { navigate } = this.props.navigation;
@@ -60,9 +81,12 @@ export default class PrePagoPayment extends Component{
         </View>)
     } else 
   return (
-
-
-    <SafeAreaView style={styles.container} onPress={Keyboard.dismiss}> 
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inner}>
 
         <View style={styles.header}>
           <View style={styles.backAndProfile}>
@@ -93,16 +117,9 @@ export default class PrePagoPayment extends Component{
     <ScrollView style={styles.centerView}>
       <View style={{alignItems:'center'}}>
         <View style={styles.viewAmount}>
-          <Text style={styles.lblAmount}>Insira o valor</Text>
+          <Text style={styles.lblAmount}>Montante a pagar</Text>
           <View style={styles.viewAmountInputs}>
-           <TextInput
-            style={styles.amountValue}
-            placeholder="1024.00"
-            onChangeText={(text) => this.setState({ amount:text })}
-            defaultValue={this.state.amount}
-            keyboardType="numeric"
-            maxLength={5}
-          />
+          <Text style={styles.lblAmountVal}>{this.props.store.paymentAmount}MT</Text>
         
         </View>
         </View>
@@ -125,11 +142,14 @@ export default class PrePagoPayment extends Component{
         </View>
         </View>
         </ScrollView>
-          <View style={styles.footerLogo}>
+        </View>
+
+        </TouchableWithoutFeedback>
+        <View style={styles.footerLogo}>
              <Image style={styles.imgFooterLogo} source={require('../../assets/img/fipagmadzi.png')}/>
           </View>
-        
-    </SafeAreaView>
+        </KeyboardAvoidingView>
+  
   );
   }
 }
@@ -307,6 +327,12 @@ const styles = StyleSheet.create({
     fontSize:height*.028,
     fontWeight:"bold",
     marginTop:-height*0.05,
+    marginLeft:16,
+  },
+  lblAmountVal:{
+    fontSize:height*.07,
+    fontWeight:"bold",
+    color:'#05185E',
     marginLeft:16,
   },
   lblPayments:{

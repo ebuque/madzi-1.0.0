@@ -54,6 +54,7 @@ export default class Welcome extends Component{
         return { cancelled: true };
       }
     } catch (e) {
+      this.setState({isLoading: false});   
       alert("Erro: "+e);
       return { error: true };
     }

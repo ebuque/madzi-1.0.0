@@ -9,7 +9,13 @@ import {
   Dimensions,
   TouchableOpacity,
   ActivityIndicator,
+  KeyboardAvoidingView, 
+  TextInput, 
+  Platform, 
+  TouchableWithoutFeedback, 
+  Button, 
 } from "react-native";
+import { Input } from 'react-native-elements';
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
@@ -23,6 +29,7 @@ export default class PrePago extends Component{
     this.state = {
      code : "",
 		 message : "",
+     amount : "",
      isLoading: false
     };
   }
@@ -31,8 +38,8 @@ export default class PrePago extends Component{
  verifyAccount = () =>
  {
    this.setState({isLoading: true});
-   if(this.state.code!==""){
-     fetch(`${this.props.store.apiHost}${this.props.store.simulateEndPoint}?eId=${this.props.store.eld}&eKey=${this.props.store.eKey}&userId=${this.props.store.userId}&meterNumber=${this.state.code}&amount=0&token=${this.props.store.token}`, {
+   if(this.state.code!=="" && this.state.amount!==""){
+     fetch(`${this.props.store.apiHost}${this.props.store.simulateEndPoint}?eId=${this.props.store.eld}&eKey=${this.props.store.eKey}&userId=${this.props.store.userId}&meterNumber=${this.state.code}&amount=${this.state.amount}&token=${this.props.store.token}`, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -46,8 +53,10 @@ export default class PrePago extends Component{
             this.props.store.addValue('customerName', json.customerName);
             this.props.store.addValue('meterNumber', json.meterNumber);
             this.props.store.addValue('customerAddress', json.customerDistrict);
+            this.props.store.addValue('paymentAmount', this.state.amount)
+            this.props.store.addValue('simulationId', json.simulationId)
             const { navigate } = this.props.navigation;
-            navigate("PrePagoDashBoard");
+            navigate("PrePagoPayment");
         } else {
           this.setState({isLoading: false, message: "Nr. de Contador inválido"})
           alert(this.state.message)
@@ -55,7 +64,7 @@ export default class PrePago extends Component{
         
       }).catch((error) => {
         this.setState({isLoading: false, message: "Desculpa, estamos a enfrentar alguns problemas ⚒️"})
-        alert(this.state.message + error)
+        alert(this.state.message)
       }).finally(() => {
         this.setState({ isLoading: false });
       });
@@ -90,9 +99,14 @@ export default class PrePago extends Component{
         </View>)
     } else 
   return (
-    <SafeAreaView style={styles.container} onPress={Keyboard.dismiss}>
 
-        <View style={styles.header}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inner}>
+       <View style={styles.header}>
               <View style={styles.homeIcon}>
                     <TouchableOpacity onPress={this.onMainMenuClicked} style={styles.mainMenu}>
 										    <Image style={styles.homeSvg} source={require('../../assets/img/home.png')}/>
@@ -109,43 +123,42 @@ export default class PrePago extends Component{
               </View>
         </View>
         <View style={styles.centerView}>
+
+          <View style={styles.inputWidgetCenter}>
               <View style={styles.logoView}>
                 <Image style={styles.logo} source={require('../../assets/img/logo.png')}/>
               </View>
               <Text style={styles.lblNrContador}>Digita o número {'\n'}do Contador</Text>
               <View style={styles.inputWidget}>
-                <SmoothPinCodeInput
-                cellSize={20}
-                codeLength={13}
-                cellStyle={{
-                  borderBottomWidth: 2,
-                  borderColor: "#05185e",
-                 
-                }}
-                textStyle={{
-                  fontSize: height*0.05,
-                  color: '#05185e'
-                }}
-                autoFocus={false}
-                animated={true}
-                cellStyleFocused={{
-                  borderColor: "white",
-                }}
-                cellStyle={styles.input}
+
+              <TextInput style={styles.input}
+                placeholder="012-0033-004-444"
                 value={this.state.code}
-                onTextChange={(meterNumber) => this.setState({ code:meterNumber, message:"" })}
-                onFulfill={Keyboard.dismiss}
-              />
-             
-            </View>
+                keyboardType="numeric"
+                maxLength={13}
+                minLength={11}
+                onChangeText={(meterNumber) => this.setState({ code:meterNumber})}
+                />
+          
+              </View>
+            <Text style={styles.lblNrContador2}>Digita o valor</Text>
+            <TextInput style={styles.input2}
+                placeholder="1289.00"
+                value={this.state.amount}
+                keyboardType="numeric"
+                onChangeText={(n) => this.setState({ amount:n })}
+                maxLength={6}
+                />
+           </View>
+            
         </View>
         <View style={styles.buttonsView}>
               <TouchableOpacity onPress={this.verifyAccount} style={styles.continueButtonn}><Text style={styles.buttonTxt}>Continuar</Text></TouchableOpacity>
         </View>
-          <View style={styles.footerLogo}>
-             <Image style={styles.imgFooterLogo} source={require('../../assets/img/footer-logo-blue.png')}/>
-          </View>
-    </SafeAreaView>
+        </View>
+        </TouchableWithoutFeedback>
+</KeyboardAvoidingView>
+
   );
   }
 }
@@ -162,27 +175,22 @@ const styles = StyleSheet.create({
     height: height*0.20,
     justifyContent:'center',
     flexDirection:"row",
-    marginTop:height*0.05,
-    backgroundColor:'yellow'
+    backgroundColor:"white",
+    top:-height*0.06
   },
   centerView:{
-   
     alignItems: 'center',
-
     width:width*0.9,
-    height: height*0.40,
+    height: height*0.6,
     justifyContent:'center',
-    flex:-1,
-    backgroundColor:'pink',
+    marginTop:-height*0.06,
+    zIndex:-3
   },
   buttonsView:{
     width:width*0.9,
    height:height*0.1,
    alignItems: 'center',
    justifyContent:'center',
-   backgroundColor:"green",
-   flex:0
-	 
   },
   footerLogo:{
     position: 'absolute',
@@ -196,12 +204,11 @@ const styles = StyleSheet.create({
   continueButtonn:{
     backgroundColor:"#05185e",
     width:width*0.55,
-    height:height*0.1,
-    margin: height*0.05,
+    height:height*0.070,
     borderRadius:height*0.1/2,
     alignItems:'center',
     justifyContent:'center',
-    marginBottom:-height*0.1
+    
   },
   mainMenu:{
     alignItems:"center",
@@ -213,15 +220,15 @@ const styles = StyleSheet.create({
   },
 	homeIcon:{
 		padding:12,
-		marginLeft:-10,
-		marginRight:20
+		marginRight:width*0.25,
 	},
   profile:{
-    marginLeft:height*0.20,
+    marginLeft:width*0.3,
     alignItems:"center",
     justifyContent:"center",
 		padding:10,
-		marginRight:-10
+    
+
   },
   logOutTxt:{
     color:"white",
@@ -234,18 +241,28 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   logoView:{
-    width:height*0.1,
+    width:height*0.2,
     height:height*0.1,
     alignItems:"center",
     justifyContent:"center",
-    margin:height*0.04,
+    margin:height*0.02,
+    marginTop:-height*0.1,
+  },
+  logo:{
+    resizeMode: 'contain',
+    flex:1
   },
   lblNrContador:{
     color:"#05185e",
     fontSize:height*0.04,
     fontWeight:"bold",
-    margin:22,
-    marginLeft:-height*0.18
+    marginLeft:-height*0.10
+  },
+  lblNrContador2:{
+    color:"#05185e",
+    fontSize:height*0.04,
+    fontWeight:"bold",
+    marginLeft:-height*0.16
   },
   circleView:{
     borderWidth:1,
@@ -280,6 +297,12 @@ const styles = StyleSheet.create({
 	userEmail:{
 		fontSize:12
 	},
+  inputWidgetCenter:{
+    justifyContent: "center",
+    alignItems: "center",
+    flex:1,  
+      
+  },
   inputWidget: {
     flexDirection: "row",
     justifyContent: "center",
@@ -299,15 +322,33 @@ const styles = StyleSheet.create({
 	},
   
   input: {
-    borderBottomWidth: 1.5,
     height:height*0.08,
-    width:width*0.055
+    width:width*0.8,
+    textAlign:"center",
+    justifyContent:"center",
+    marginBottom:-height*0.01,
+    fontSize:height*0.040
     },
+  
+    input2: {
+      height:height*0.08,
+      width:width*0.8,
+      textAlign:"center",
+      justifyContent:"center",
+      marginBottom:-height*0.01,
+      borderColor: "#000000",
+      borderBottomWidth: 1,
+      fontSize:height*0.04
+      
+      },
     homeSvg:{
-      width:width*0.05,
-      height:height*0.05,
-      flex:-1,
-      backgroundColor:'green',
-      padding:height*0.04
-    }
+      width:width*0.02,
+      height:height*0.02,
+      padding:height*0.024
+    },
+    inner: {
+      padding: height*0.11,
+      flex: 1,
+      justifyContent: "space-around"
+    },
 });
