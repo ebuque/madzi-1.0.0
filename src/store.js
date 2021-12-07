@@ -3,6 +3,7 @@ import { observable, action } from "mobx";
 class Loja {
     @observable user = ""
     @observable email = ""
+    @observable accessToken=""
     @observable apiHost = "http://41.223.152.98:8077"
     @observable simulateEndPoint = "/fipagmaputo/api/recharge/simulate"
     @observable rechargeEndPoint = "/fipagmaputo/api/recharge/generate"
@@ -37,6 +38,9 @@ class Loja {
                 break;
            case 'debtAmount':
                this.debtAmount = item;
+               break;
+           case 'accessToken':
+               this.accessToken = item;
                break;
 
            case 'availabilityService':

@@ -10,7 +10,10 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-
+import * as Google from "expo-google-app-auth";
+import {IOS_GCLIENT_ID, ANDROID_GCLIENT_ID} from '@env';
+const iosClientId = IOS_GCLIENT_ID;
+const androidClientId = ANDROID_GCLIENT_ID;
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
 
@@ -28,9 +31,32 @@ export default class PaymentDone extends Component{
   }
 
 
-  Logout = () =>{
-    const { navigate } = this.props.navigation;
-    navigate("Welcome");
+
+  Logout = async() =>{
+    this.setState({isLoading: true});
+
+    try{
+      const config = {
+        iosClientId: iosClientId,
+        androidClientId: androidClientId,
+       // iosStandaloneAppClientId: `<YOUR_IOS_CLIENT_ID>`,
+        androidStandaloneAppClientId: androidClientId,
+      };
+      const accessToken = this.props.store.accessToken;
+      
+        await Google.logOutAsync({ accessToken, ...config });
+        /* `accessToken` is now invalid and cannot be used to get data from the Google API with HTTP requests */
+        this.setState({isLoading: false});
+        const { navigate } = this.props.navigation;
+        navigate("Welcome");
+      
+    }catch(e){
+      this.setState({isLoading: false});   
+      alert("Erro: "+e);
+      return { error: true };
+    }
+    
+
   };
   goToPrePaid =()=>{
      this.setState({isLoading: true})
@@ -98,7 +124,6 @@ export default class PaymentDone extends Component{
                   </View>
                   <Text style={styles.userName}>{this.props.store.user}</Text>
                   <Text style={styles.userEmail}>{this.props.store.email}</Text>
-                  <TouchableOpacity onPress={this.Logout} style={styles.logOut}><Text style={styles.logOutTxt}>Terminar sessão</Text></TouchableOpacity>
               </View>
         </View>
         <ScrollView style={styles.centerViewScrool}>

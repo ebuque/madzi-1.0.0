@@ -15,6 +15,10 @@ import {
   TouchableWithoutFeedback, 
   Button, 
 } from "react-native";
+import * as Google from "expo-google-app-auth";
+import {IOS_GCLIENT_ID, ANDROID_GCLIENT_ID} from '@env';
+const iosClientId = IOS_GCLIENT_ID;
+const androidClientId = ANDROID_GCLIENT_ID;
 import { Input } from 'react-native-elements';
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 const width = Math.round(Dimensions.get("window").width);
@@ -63,7 +67,7 @@ export default class PrePago extends Component{
         }
         
       }).catch((error) => {
-        this.setState({isLoading: false, message: "Desculpa, estamos a enfrentar alguns problemas ⚒️"})
+        this.setState({isLoading: false, message: "Desculpa, estamos a enfrentar alguns problemas"})
         alert(this.state.message)
       }).finally(() => {
         this.setState({ isLoading: false });
@@ -84,11 +88,33 @@ export default class PrePago extends Component{
     const { navigate } = this.props.navigation;
     navigate("PrePagoDashBoard");
   };
-  Logout = () =>{
-    const { navigate } = this.props.navigation;
-    navigate("Welcome");
-  };
 
+  Logout = async() =>{
+    this.setState({isLoading: true});
+
+    try{
+      const config = {
+        iosClientId: iosClientId,
+        androidClientId: androidClientId,
+       // iosStandaloneAppClientId: `<YOUR_IOS_CLIENT_ID>`,
+        androidStandaloneAppClientId: androidClientId,
+      };
+      const accessToken = this.props.store.accessToken;
+      
+        await Google.logOutAsync({ accessToken, ...config });
+        /* `accessToken` is now invalid and cannot be used to get data from the Google API with HTTP requests */
+        this.setState({isLoading: false});
+        const { navigate } = this.props.navigation;
+        navigate("Welcome");
+      
+    }catch(e){
+      this.setState({isLoading: false});   
+      alert("Erro: "+e);
+      return { error: true };
+    }
+    
+
+  };
   
   render() {
     if (this.state.isLoading==true) {
@@ -119,7 +145,7 @@ export default class PrePago extends Component{
                   </View>
                   <Text style={styles.userName}>{this.props.store.user}</Text>
                   <Text style={styles.userEmail}>{this.props.store.email}</Text>
-                   <TouchableOpacity onPress={this.Logout} style={styles.logOut}><Text style={styles.logOutTxt}>Terminar sessão</Text></TouchableOpacity>
+                
               </View>
         </View>
         <View style={styles.centerView}>

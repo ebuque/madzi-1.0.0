@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.ios.gmadzi",
+      "bundleIdentifier": "mz.co.fipag.ios.madzi",
       "config":{
         "googleSignIn":{
           "reservedClientId":"com.googleusercontent.apps.769033067926-3e2e0sv01jugc45jeadhma9qvep0ik8"
@@ -29,7 +29,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "host.exp.exponent"
     },
     "web": {
       "favicon": "./assets/favicon.png"

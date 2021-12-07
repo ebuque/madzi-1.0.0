@@ -11,11 +11,11 @@ import {
 } from "react-native";
 import * as Google from "expo-google-app-auth";
 import {IOS_GCLIENT_ID, ANDROID_GCLIENT_ID} from '@env';
-
-const width = Math.round(Dimensions.get("window").width);
-const height = Math.round(Dimensions.get("window").height);
 const iosClientId = IOS_GCLIENT_ID;
 const androidClientId = ANDROID_GCLIENT_ID;
+const width = Math.round(Dimensions.get("window").width);
+const height = Math.round(Dimensions.get("window").height);
+
 
 import {observer, inject} from "mobx-react";
 @inject("store")
@@ -32,38 +32,38 @@ export default class Welcome extends Component{
     };
   }
 
-   signInAsync = async () => {
+  googleLogin = async () =>{
      this.setState({isLoading: true});
-    try {
-      const result = await Google.logInAsync({
-        androidClientId: androidClientId,
-        iosClientId: iosClientId,
-        scopes: ['profile', 'email'],
-        permissions: ['public_profile', 'email', 'gender', 'location']
-      });
-  
-      if (result.type === 'success') {
-       
-        this.props.store.addValue("fullname", result.user.name)
-        this.props.store.addValue("email", result.user.email)
+     try {
+     const { type, accessToken, user } = await Google.logInAsync({
+      iosClientId: iosClientId,
+      androidClientId: androidClientId,
+     // iosStandaloneAppClientId: `<YOUR_IOS_CLIENT_ID>`,
+      androidStandaloneAppClientId: androidClientId,
+    });
+
+    if (type === 'success') {
+      /* `accessToken` is now valid and can be used to get data from the Google API with HTTP requests */
+        this.props.store.addValue("fullname", user.givenName+" "+user.familyName)
+        this.props.store.addValue("email", user.email)
+        this.props.store.addValue("accessToken", accessToken);
         this.setState({isLoading: false});    
         const { navigate } = this.props.navigation;
         navigate("Main");
-      } else {
-        this.setState({isLoading: false});
-        return { cancelled: true };
-      }
-    } catch (e) {
-      this.setState({isLoading: false});   
-      alert("Erro: "+e);
-      return { error: true };
+    }else {
+      this.setState({isLoading: false});
+      return { cancelled: true };
     }
-    
-
-  };
+  } catch (e) {
+    this.setState({isLoading: false});   
+    alert("Erro: "+e);
+    return { error: true };
+  }
+  }
+ 
 
   onPress = () => {
-    this.signInAsync();
+    this.googleLogin();
   };
 
 

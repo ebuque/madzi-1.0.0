@@ -19,21 +19,21 @@ import PaymentDone from "./src/screens/PaymentDone"
 
 //Import store
 import store from "./src/store";
-const DrawerNavigation = createDrawerNavigator({
-  Welcome: Welcome,
-  Main: Main,
-  PrePago: PrePago,
-  PrePagoDashBoard: PrePagoDashBoard,
-  PrePagoPayment:PrePagoPayment,
-  MPesa:MPesa,
-  PaymentDone:PaymentDone,
-  });
+// const DrawerNavigation = createDrawerNavigator({
+//   Welcome: Welcome,
+//   Main: Main,
+//   PrePago: PrePago,
+//   PrePagoDashBoard: PrePagoDashBoard,
+//   PrePagoPayment:PrePagoPayment,
+//   MPesa:MPesa,
+//   PaymentDone:PaymentDone,
+//   });
 
 const StackNavigation = createStackNavigator(
   {
-    DrawerNavigation: {
-      screen: DrawerNavigation,
-    },
+  //   DrawerNavigation: {
+  //     screen: DrawerNavigation,
+  //   },
     Welcome: Welcome,
     Main: Main,
     PrePago: PrePago,
@@ -43,7 +43,20 @@ const StackNavigation = createStackNavigator(
     PaymentDone:PaymentDone,
   },
   {
-    headerMode: "none",
+    index: 0,
+    initialRouteName: 'Welcome',
+    headerMode: 'none',
+    defaultNavigationOptions: {
+      gesturesEnabled: false,
+      animationEnabled: false,
+      transitionConfig: () => ({
+        transitionSpec: {
+            duration: 0,
+            timing: 0,
+        },
+    }),
+    },
+    
   }
 );
 
