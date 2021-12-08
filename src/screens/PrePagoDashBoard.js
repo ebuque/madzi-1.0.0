@@ -138,7 +138,7 @@ export default class PrePagoDashBoard extends Component{
            </View>
         </View>
         <ScrollView style={styles.centerView}>
-          <View style={{alignItems:'center'}}>
+          <View style={{alignItems:'center', marginTop:height*0.08}}>
               <TouchableOpacity onPress={this.PrePago} style={styles.actionButton1}><Text style={styles.buttonTxt}>Comprar Água</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton2}><Text style={styles.buttonTxt}>Pagar Dívidas</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton3}><Text style={styles.buttonTxt}>Reclamações</Text></TouchableOpacity>
@@ -182,10 +182,12 @@ const styles = StyleSheet.create({
   },
   centerView:{
     width:width,
-	  top:height*0.35,
+	  top:height*0.3,
     height:height*0.7,
     position:'absolute',
-    paddingTop:height*0.06
+    paddingTop:height*0.06,
+    zIndex:-3,
+    elevation:-3
   },
   footerLogo:{
     position: 'absolute',

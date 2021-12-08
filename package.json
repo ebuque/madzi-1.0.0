@@ -13,6 +13,7 @@
     ]
   },
   "dependencies": {
+    "@babel/plugin-transform-regenerator": "7.4.4",
     "@builderx/utils": "~0.1.7",
     "@expo/vector-icons": "^12.0.5",
     "@react-navigation/bottom-tabs": "^6.0.9",

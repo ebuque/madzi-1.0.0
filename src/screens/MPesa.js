@@ -189,8 +189,8 @@ export default class MPesa extends Component{
         <View style={styles.viewPaymentSystems}>
           <Text style={styles.lblPayments}>Numero com {'\n'}M-Pesa</Text>
           <View style={styles.inputWidget}>
-          <TextInput style={styles.input}
-                placeholder="Ex.: 841234567"
+          <TextInput style={this.state.phone ? styles.input : styles.placeholder}
+                placeholder="Inserir número com M-Pesa"
                 value={this.state.phone}
                 keyboardType="numeric"
                 maxLength={9}
@@ -230,7 +230,8 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     position:'absolute',
     left:0,
-    top: height*0.1
+    top: height*0.1,
+  
   },
   inner:{
     padding: height*0.11,
@@ -258,7 +259,7 @@ const styles = StyleSheet.create({
     flexDirection:'column'
   },
   viewSecondRow:{
-    marginTop:20
+    marginTop:height*0.05
   },
   header:{
     height: height*0.3,
@@ -415,6 +416,11 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     marginBottom:-height*0.01,
     fontSize:height*0.040
+    },
+    placeholder:{
+      fontSize:height*0.025,
+      textAlign:"center",
+      justifyContent:"center",
     },
 	userEmail:{
 		fontSize:height*0.015,

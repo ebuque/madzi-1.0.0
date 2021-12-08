@@ -18,32 +18,114 @@ const iosClientId = IOS_GCLIENT_ID;
 const androidClientId = ANDROID_GCLIENT_ID;
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
+let {paymentAmount, rechargeCode, debtAmount, vat, availabilityService, waterVolume, waterAmount, customerAddress, customerName, scale, category, meterNumber, transactionId} = "";
+ let html = "";
+// const html = `
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Pdf Content</title>
+//     <style>
+//         body {
+//             font-size: 16px;
+//             text-align: justify;
+//         }
 
+//         h1, h2, h3{
+//             color: #05185E;
+//         }
+//         hr{
+//             width: 90%;
+//             margin-left: 0;
+//         }
+//     </style>
+// </head>
+// <body>
+//     <h2>Código da recarga:</h2> 
+//     <h2>`+this.props.store.rechargeCode+`</h2>
+//         <hr>
+//         <h3>Compra</h3>
+//         <label>Valor Pago: `+`${this.props.store.paymentAmount}`+`MT</label><br>
+//         <label>Divida Paga: `+`${this.props.store.debtAmount}`+`MT</label><br>
+//         <label>IVA: `+`${this.props.store.vat}`+`MT</label><br>
 
-const html = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pdf Content</title>
-        <style>
-            body {
-                font-size: 16px;
-                color: rgb(255, 196, 0);
-            }
+//         <h3>Taxas</h3>
+//         <label>Fixa: 0.00MT</label><br>
+//         <label>Desp. Servico: `+`${this.props.store.availabilityService}`+`MT</label><br>
 
-            h1 {
-                text-align: center;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Hello, UppLabs!</h1>
-    </body>
-    </html>
-`;
+//         <h3>Consumo</h3>
+//         <label>Valor: `+`${this.props.store.waterAmount}`+`MT</label><br>
+//         <label>Volume: `+`${this.props.store.waterVolume}`+`m3</label><br>
+//         <label>Cliente: `+`${this.props.store.customerName}`+`</label><br>
+//         <label>Nr. do Contador: `+`${this.props.store.meterNumber}`+`</label><br>
+//         <label>Regiao: `+`${this.props.store.customerAddress}`+`</label><br>
+//         <label>Escalao: `+`${this.props.store.scale}`+`</label><br>
+//         <label>Tarifario: `+`${this.props.store.category}`+`</label><br>
+//         <label>Referencia: `+`${this.props.store.transactionId}`+`</label><br>
+// </body>
+// </html>
+// `;
 
+// const html = `
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Pdf Content</title>
+//     <style>
+//         body {
+//             font-size: 16px;
+//             text-align: justify;
+//         }
+
+//         h1, h2, h3{
+//             color: #05185E;
+//         }
+//         hr{
+//             width: 50%;
+//             margin-left: 0;
+//         }
+//         div{
+//             width: 50%;
+//             margin-left: 0;
+//         }
+//         img{
+//             position: absolute;
+//             right: 50%;
+//         }
+//     </style>
+// </head>
+// <body>
+//     <h2>Código da recarga:</h2> 
+//     <h2>6055 9576 3960 8183 2849</h2>
+//         <hr>
+//         <h3>Compra</h3>
+//         <label>Valor Pago: 588.00MT</label><br>
+//         <label>Divida Paga: 0.00MT</label><br>
+//         <label>IVA: 66.49MT</label><br>
+
+//         <h3>Taxas</h3>
+//         <label>Fixa: 0.00MT</label><br>
+//         <label>Desp. Servico: 60.00MT</label><br>
+
+//         <h3>Consumo</h3>
+//         <label>Valor: 521.51MT</label><br>
+//         <label>Volume: 9.61m3</label><br>
+//         <label>Cliente: Novo Terceiro</label><br>
+//         <label>Nr. do Contador: 0120033004444</label><br>
+//         <label>Regiao: Maputo Cidade</label><br>
+//         <label>Escalao: Escalao 3</label><br>
+//         <label>Tarifario: Domestico</label><br>
+//         <label>Referencia: 82793SOLCOMYU</label><br>
+//         <div>
+//                 <img src="../../assets/img/fipagmadzi.png"/>
+//         </div>
+// </body>
+// </html>
+// `
 import {observer, inject} from "mobx-react";
 import { color } from "react-native-reanimated";
 @inject("store")
@@ -54,14 +136,15 @@ export default class PaymentDone extends Component{
     this.state = {
       isLoading:false,
       timePassed: false,
+      rec:""
     };
   }
+
 
   toDecimal = (n) => {
 
     return  parseFloat(n).toFixed(2);
   }
-
 
 
   goToMain =()=>{
@@ -88,13 +171,72 @@ export default class PaymentDone extends Component{
         navigate("PrePagoDashBoard");
       });
   };
-  
+
+ 
 
   printToFile = async () => {
+
+    html = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pdf Content</title>
+        <style>
+            body {
+                font-size: 16px;
+                text-align: justify;
+            }
+    
+            h1, h2, h3{
+                color: #05185E;
+            }
+            hr{
+                width: 90%;
+                margin-left: 0;
+            }
+            div{
+                width: 50%;
+                margin-left: 0;
+            }
+            img{
+                position: absolute;
+                right: 50%;
+              
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2>Código da recarga:</h2> 
+        <h2>`+this.props.store.rechargeCode+`</h2>
+            <hr>
+            <h3>Compra</h3>
+            <label>Valor Pago: `+`${this.toDecimal(this.props.store.paymentAmount)}`+`MT</label><br>
+            <label>Divida Paga: `+`${this.toDecimal(this.props.store.debtAmount)}`+`MT</label><br>
+            <label>IVA: `+`${this.toDecimal(this.props.store.vat)}`+`MT</label><br>
+    
+            <h3>Taxas</h3>
+            <label>Fixa: 0.00MT</label><br>
+            <label>Desp. Servico: `+`${this.toDecimal(this.props.store.availabilityService)}`+`MT</label><br>
+    
+            <h3>Consumo</h3>
+            <label>Valor: `+`${this.toDecimal(this.props.store.waterAmount)}`+`MT</label><br>
+            <label>Volume: `+`${this.toDecimal(this.props.store.waterVolume)}`+`m3</label><br>
+            <label>Cliente: `+`${this.props.store.customerName}`+`</label><br>
+            <label>Nr. do Contador: `+`${this.props.store.meterNumber}`+`</label><br>
+            <label>Regiao: `+`${this.props.store.customerAddress}`+`</label><br>
+            <label>Escalao: `+`${this.props.store.scale}`+`</label><br>
+            <label>Tarifario: `+`${this.props.store.category}`+`</label><br>
+            <label>Referencia: `+`${this.props.store.transactionId}`+`</label><br>
+            <div>
+                <img src="https://erasmobuque.life/fipagmadzi.png"/>
+          </div>
+    </body>
+    </html>
+    `;
     // On iOS/android prints the given html. On web prints the HTML from the current page.
-    const { uri } = await Print.printToFileAsync({
-      html
-    });
+    const { uri } = await Print.printToFileAsync({html});
     console.log('File has been saved to:', uri);
     await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
   }
@@ -140,12 +282,12 @@ export default class PaymentDone extends Component{
               <Text style={styles.txtDetails}>Tarifário: {this.props.store.category}</Text>
               <Text style={styles.txtDetails}>Referência: {this.props.store.transactionId}</Text>
 
-              <View style={styles.footerLogo}>
+          <View style={styles.footerLogo}>
              <Image style={styles.imgFooterLogo} source={require('../../assets/img/fipagmadzi.png')}/>
           </View>
  
               </View>
-              <View style={styles.buttonsView}>
+            <View style={styles.buttonsView}>
             <TouchableOpacity style={styles.saveButton} onPress={this.printToFile}><Text style={{color:'#05185e', fontSize:18}}>Guardar</Text></TouchableOpacity>
             <TouchableOpacity style={styles.seeButton} onPress={this.goToMain}><Text style={{color:'white', fontSize:18}}>Terminar</Text></TouchableOpacity>
           </View>
@@ -195,29 +337,27 @@ const styles = StyleSheet.create({
   },
   centerView:{
     width:width*0.9,
-    height:height*0.15,
     alignItems: 'center',
     justifyContent:'center',
     flexDirection:'row',
-    marginTop:-height*0.05,
-    zIndex:-3
+
     
     
   },
   centerViewScrool:{
     paddingTop:height*0.02,
-    marginTop:height*0.05
+    marginTop:height*0.1,
+    height:height,
+    position:'absolute',
   },
   receip:{
    width:width-2,
-   height:height*0.7,
    alignItems: 'center',
    marginTop:0,
    borderWidth:2,
    borderColor:'#2191ff',
-   borderTopEndRadius:height*0.03,
-   borderTopLeftRadius:height*0.03,
-   borderBottomColor:'transparent'
+   borderRadius:height*0.03,
+
    
   },
   
