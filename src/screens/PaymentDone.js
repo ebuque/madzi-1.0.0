@@ -10,12 +10,39 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
+import * as Print from 'expo-print';
+import { shareAsync } from 'expo-sharing';
 import * as Google from "expo-google-app-auth";
 import {IOS_GCLIENT_ID, ANDROID_GCLIENT_ID} from '@env';
 const iosClientId = IOS_GCLIENT_ID;
 const androidClientId = ANDROID_GCLIENT_ID;
 const width = Math.round(Dimensions.get("window").width);
 const height = Math.round(Dimensions.get("window").height);
+
+
+const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pdf Content</title>
+        <style>
+            body {
+                font-size: 16px;
+                color: rgb(255, 196, 0);
+            }
+
+            h1 {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Hello, UppLabs!</h1>
+    </body>
+    </html>
+`;
 
 import {observer, inject} from "mobx-react";
 import { color } from "react-native-reanimated";
@@ -30,35 +57,14 @@ export default class PaymentDone extends Component{
     };
   }
 
+  toDecimal = (n) => {
+
+    return  parseFloat(n).toFixed(2);
+  }
 
 
-  Logout = async() =>{
-    this.setState({isLoading: true});
 
-    try{
-      const config = {
-        iosClientId: iosClientId,
-        androidClientId: androidClientId,
-       // iosStandaloneAppClientId: `<YOUR_IOS_CLIENT_ID>`,
-        androidStandaloneAppClientId: androidClientId,
-      };
-      const accessToken = this.props.store.accessToken;
-      
-        await Google.logOutAsync({ accessToken, ...config });
-        /* `accessToken` is now invalid and cannot be used to get data from the Google API with HTTP requests */
-        this.setState({isLoading: false});
-        const { navigate } = this.props.navigation;
-        navigate("Welcome");
-      
-    }catch(e){
-      this.setState({isLoading: false});   
-      alert("Erro: "+e);
-      return { error: true };
-    }
-    
-
-  };
-  goToPrePaid =()=>{
+  goToMain =()=>{
      this.setState({isLoading: true})
     fetch('https://google.com', /** Just to fetch something, in order to have processing time */ {
         method: 'GET',
@@ -71,41 +77,28 @@ export default class PaymentDone extends Component{
       
           this.setState({isLoading: false})
           const { navigate } = this.props.navigation;
-          navigate("PrePago");        
+          navigate("PrePagoDashBoard");        
       }).catch((error) => {
         this.setState({isLoading: false})
         const { navigate } = this.props.navigation;
-        navigate("PrePago")
+        navigate("PrePagoDashBoard");
       }).finally(() => {
         this.setState({ isLoading: false });
         const { navigate } = this.props.navigation;
-        navigate("PrePago")
+        navigate("PrePagoDashBoard");
       });
   };
-  goToPostPaid =()=>{
-    this.setState({isLoading: true})
-    fetch('https://google.com', /** Just to fetch something, in order to have processing time */ {
-        method: 'GET',
-        headers: {
-          Accept: 'application/html',
-          'Content-Type': 'application/html'
-        }
-    }).then((response )=> response.json()).then(
-        (json)=> {
-      
-          this.setState({isLoading: false})
-          const { navigate } = this.props.navigation;
-          navigate("PosPago");        
-      }).catch((error) => {
-        this.setState({isLoading: false})
-        const { navigate } = this.props.navigation;
-        navigate("PosPago")
-      }).finally(() => {
-        this.setState({ isLoading: false });
-        const { navigate } = this.props.navigation;
-        navigate("PosPago")
-      });
-  };
+  
+
+  printToFile = async () => {
+    // On iOS/android prints the given html. On web prints the HTML from the current page.
+    const { uri } = await Print.printToFileAsync({
+      html
+    });
+    console.log('File has been saved to:', uri);
+    await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
+  }
+
   render() {
         if (this.state.isLoading==true) {
       return (<View style={{flex:1,
@@ -117,15 +110,7 @@ export default class PaymentDone extends Component{
   return (
     <SafeAreaView style={styles.container}>
 
-        <View style={styles.header}>
-              <View style={styles.profile}>
-                  <View style={styles.circleView}>
-                  <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>{this.props.store.user.charAt(0)}</Text></View>
-                  </View>
-                  <Text style={styles.userName}>{this.props.store.user}</Text>
-                  <Text style={styles.userEmail}>{this.props.store.email}</Text>
-              </View>
-        </View>
+   
         <ScrollView style={styles.centerViewScrool}>
         <View style={styles.centerView}>
         <Image style={styles.done} source={require('../../assets/img/done.png')}/>
@@ -138,17 +123,18 @@ export default class PaymentDone extends Component{
               <View style={styles.rowRechargeDetails}>
               
               <Text style={styles.voucher}>Compra</Text>
-              <Text style={styles.txtDetails}>Valor Pago: {this.props.store.paymentAmount}MT</Text>
-              <Text style={styles.txtDetails}>Dívida Paga: {this.props.store.debtAmount}MT</Text>
-              <Text style={styles.txtDetails}>IVA: {this.props.store.vat}MT</Text>
+              <Text style={styles.txtDetails}>Valor Pago: {this.toDecimal(this.props.store.paymentAmount)}MT</Text>
+              <Text style={styles.txtDetails}>Dívida Paga: {this.toDecimal(this.props.store.debtAmount)}MT</Text>
+              <Text style={styles.txtDetails}>IVA: {this.toDecimal(this.props.store.vat)}MT</Text>
               <Text style={styles.voucher}>Taxas</Text>
               <Text style={styles.txtDetails}>Fixa: 0MT</Text>
-              <Text style={styles.txtDetails}>Desp. Servico: {this.props.store.availabilityService}MT</Text>
+              <Text style={styles.txtDetails}>Desp. Servico: {this.toDecimal(this.props.store.availabilityService)}MT</Text>
               <Text style={styles.voucher}>Consumo</Text>
-              <Text style={styles.txtDetails}>Valor: {this.props.store.waterAmount}MT</Text>
-              <Text style={styles.txtDetails}>Volume: {this.props.store.waterVolume}m3</Text>
+              <Text style={styles.txtDetails}>Valor: {this.toDecimal(this.props.store.waterAmount)}MT</Text>
+              <Text style={styles.txtDetails}>Volume: {this.toDecimal(this.props.store.waterVolume)}m3</Text>
              
               <Text style={styles.txtDetails}>Cliente: {this.props.store.customerName}</Text>
+              <Text style={styles.txtDetails}>Nr. do Contador: {this.props.store.meterNumber}</Text>
               <Text style={styles.txtDetails}>Região: {this.props.store.customerAddress}</Text>
               <Text style={styles.txtDetails}>Escalão: {this.props.store.scale}</Text>
               <Text style={styles.txtDetails}>Tarifário: {this.props.store.category}</Text>
@@ -160,8 +146,8 @@ export default class PaymentDone extends Component{
  
               </View>
               <View style={styles.buttonsView}>
-            <TouchableOpacity style={styles.saveButton}><Text style={{color:'#05185e', fontSize:18}}>Guardar</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.seeButton}><Text style={{color:'white', fontSize:18}}>Ver Água</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.saveButton} onPress={this.printToFile}><Text style={{color:'#05185e', fontSize:18}}>Guardar</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.seeButton} onPress={this.goToMain}><Text style={{color:'white', fontSize:18}}>Terminar</Text></TouchableOpacity>
           </View>
         </View>
          </ScrollView>
@@ -219,7 +205,8 @@ const styles = StyleSheet.create({
     
   },
   centerViewScrool:{
-    paddingTop:height*0.02
+    paddingTop:height*0.02,
+    marginTop:height*0.05
   },
   receip:{
    width:width-2,

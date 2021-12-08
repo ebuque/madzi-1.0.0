@@ -38,7 +38,10 @@ export default class PrePagoPayment extends Component{
   
   componentDidMount() {}
 
+  toDecimal = (n) => {
 
+    return  parseFloat(n).toFixed(2);
+  }
   onMainMenuClicked = () => {
     const { navigate } = this.props.navigation;
     navigate("PrePago");
@@ -123,19 +126,19 @@ export default class PrePagoPayment extends Component{
                         <Text style={styles.txtMainMenu}>Pagamento</Text>
                     </TouchableOpacity>
               </View>
-              <View style={styles.profile}>
+              {/* <View style={styles.profile}>
                   <View style={styles.circleView}>
                   <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>{this.props.store.user.charAt(0)}</Text></View>
                   </View>
                   <Text style={styles.userName}>{this.props.store.user}</Text>
                   <Text style={styles.userEmail}>{this.props.store.email}</Text>
-              </View>
+              </View> */}
             </View>
             <View style={styles.clientDetails}>
-            <Text style={{color:'#2190fe', fontSize:height*0.025, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
-                <Text style={{color:'white', fontSize:height*0.030, fontWeight:'bold', marginLeft:8, marginLeft:32}}>{this.props.store.customerName}</Text>
-                <Text style={{color:'#2190fe', fontSize:height*0.025, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: {this.props.store.meterNumber}</Text>
-                <Text style={{color:'#2190fe', fontSize:height*0.025, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: {this.props.store.customerAddress}</Text>
+            <Text style={{color:'#2190fe', fontSize:width*0.040, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
+                <Text style={{color:'white', fontSize:width*0.050, fontWeight:'bold', marginLeft:8, marginLeft:32}}>{this.props.store.customerName}</Text>
+                <Text style={{color:'#2190fe', fontSize:width*0.040, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: {this.props.store.meterNumber}</Text>
+                <Text style={{color:'#2190fe', fontSize:width*0.040, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: {this.props.store.customerAddress}</Text>
            </View>
         </View>
 
@@ -145,7 +148,7 @@ export default class PrePagoPayment extends Component{
         <View style={styles.viewAmount}>
           <Text style={styles.lblAmount}>Montante a pagar</Text>
           <View style={styles.viewAmountInputs}>
-          <Text style={styles.lblAmountVal}>{this.props.store.paymentAmount}MT</Text>
+          <Text style={styles.lblAmountVal}>{this.toDecimal(this.props.store.paymentAmount)}MT</Text>
         
         </View>
         </View>
@@ -202,23 +205,26 @@ const styles = StyleSheet.create({
     width:width,
     borderBottomRightRadius:height*0.06,
     borderBottomLeftRadius:height*0.06,
-    marginTop:height*0.05
+    marginTop:height*0.05,
+    position:'absolute',
+    top:-5,
   },
   centerView:{
     width:width,
-	  top:-height*0.05,
-    paddingTop:height*0.135,
-    zIndex: -3,
-    elevation:-3,
+	  top:height*0.35,
+    height:height*0.7,
+    position:'absolute'
 
   },
   footerLogo:{
     position: 'absolute',
-    bottom:'5%',
+    bottom:0,
     width:130,
-    height:40,
+    height:height*0.1,
     alignItems: 'center',
-    padding:8
+    padding:8,
+    backgroundColor:'white',
+    width:width
   },
   actionButton1:{
     backgroundColor:"#05185e",
@@ -352,14 +358,11 @@ const styles = StyleSheet.create({
   lblAmount:{
     fontSize:height*.028,
     fontWeight:"bold",
-    marginTop:-height*0.05,
-    marginLeft:16,
   },
   lblAmountVal:{
-    fontSize:height*.07,
+    fontSize:width*.1,
     fontWeight:"bold",
     color:'#05185E',
-    marginLeft:16,
   },
   lblPayments:{
     fontSize:height*0.028,
@@ -382,7 +385,7 @@ const styles = StyleSheet.create({
     width:width*0.9,
     alignItems:'center',
     justifyContent:"center",
-    height: height/8,
+    height: height*0.20,
     flexDirection:"row",
     margin:8
   },
@@ -390,7 +393,7 @@ const styles = StyleSheet.create({
     width:width*0.90,
     alignItems:'center',
     justifyContent:"center",
-    height: height/10,
+    height: height*0.15,
     margin:8,
     marginTop:4
   },
@@ -454,6 +457,13 @@ const styles = StyleSheet.create({
     marginTop:-40,
     width:25,
     height:25
-  }
+  },
+  inner: {
+    flex: 1,
+    justifyContent: "space-around",
+    flexDirection:'column',
+    width:width*0.95,
+    alignItems:'center',
+  },
   
 });

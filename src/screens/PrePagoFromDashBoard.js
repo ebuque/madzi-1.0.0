@@ -27,7 +27,7 @@ const height = Math.round(Dimensions.get("window").height);
 import {observer, inject} from "mobx-react";
 @inject("store")
 @observer
-export default class PrePago extends Component{
+export default class PrePagoFromDashBoard extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -60,7 +60,7 @@ export default class PrePago extends Component{
         (json)=> {
            
         if (json.errorCode==null) {
-            this.setState({isLoading: false});
+            this.setState({isLoading: false, messageMeterEmpty: "", messageMeterNumber: "", messageProblems: "", messageValue: "" });
             this.props.store.addValue('customerName', json.customerName);
             this.props.store.addValue('meterNumber', json.meterNumber);
             this.props.store.addValue('customerAddress', json.customerDistrict);
@@ -85,7 +85,7 @@ export default class PrePago extends Component{
 
   onMainMenuClicked = () => {
     const { navigate } = this.props.navigation;
-    navigate("Main");
+    navigate("PrePagoDashBoard");
   };
 
   onContinueClicked = () => {
@@ -115,7 +115,7 @@ export default class PrePago extends Component{
               <View style={styles.homeIcon}>
                     <TouchableOpacity onPress={this.onMainMenuClicked} style={styles.mainMenu}>
 										    <Image style={styles.backArrow} source={require('../../assets/img/back-black.png')}/>
-                        <Text style={styles.txtMainMenu}>MENU PRINCIPAL</Text>
+                        <Text style={styles.txtMainMenu}>Voltar</Text>
                     </TouchableOpacity>
               </View>
               {/* <View style={styles.profile}>

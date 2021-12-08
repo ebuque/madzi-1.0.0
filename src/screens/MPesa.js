@@ -37,8 +37,13 @@ export default class MPesa extends Component{
     };
   }
   
+
   componentDidMount() {}
 
+  toDecimal = (n) => {
+
+    return  parseFloat(n).toFixed(2);
+  }
 
   onMainMenuClicked = () => {
     const { navigate } = this.props.navigation;
@@ -74,18 +79,19 @@ export default class MPesa extends Component{
         this.props.store.addValue('availabilityService', json.availabilityService);
         const { navigate } = this.props.navigation;
         navigate("PaymentDone");
-        console.log(json)
          
     }).catch((error) => {
       this.setState({isLoading: false, message: "Desculpa, estamos a enfrentar alguns problemas"})
-      alert(this.state.message)
+     
     }).finally(() => {
       this.setState({ isLoading: false });
     });
+ 
   }
 
    Mpesa = ()=>{
-    this.setState({ isLoading: true }); 
+    this.setState({ isLoading: true });
+    if(this.state.phone!==""){ 
     fetch(`${this.props.store.mpesaApiEndpoint}`, {
       method: 'POST',
       headers: {
@@ -109,44 +115,23 @@ export default class MPesa extends Component{
           
         }else{
           this.setState({isLoading: false, message: "Desculpa, o pagamento falhou."})
-          alert(this.state.message)
+         
           
         }
          
     }).catch((error) => {
       this.setState({isLoading: false, message: "Desculpa, estamos a enfrentar alguns problemas."})
-      alert(this.state.message)
+     
     }).finally(() => {
       this.setState({ isLoading: false });
     });
+  }else{
+    this.setState({isLoading: false, message: "Por favor preencha o nr. de telefone"});
+    
+   }
    }
 
-   Logout = async() =>{
-    this.setState({isLoading: true});
 
-    try{
-      const config = {
-        iosClientId: iosClientId,
-        androidClientId: androidClientId,
-       // iosStandaloneAppClientId: `<YOUR_IOS_CLIENT_ID>`,
-        androidStandaloneAppClientId: androidClientId,
-      };
-      const accessToken = this.props.store.accessToken;
-      
-        await Google.logOutAsync({ accessToken, ...config });
-        /* `accessToken` is now invalid and cannot be used to get data from the Google API with HTTP requests */
-        this.setState({isLoading: false});
-        const { navigate } = this.props.navigation;
-        navigate("Welcome");
-      
-    }catch(e){
-      this.setState({isLoading: false});   
-      alert("Erro: "+e);
-      return { error: true };
-    }
-    
-
-  };
   
   render() {
      if (this.state.isLoading==true) {
@@ -164,51 +149,55 @@ export default class MPesa extends Component{
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
-        <View style={styles.header}>
-          <View style={styles.backAndProfile}>
-              <View style={styles.backIcon}>
+          <View style={styles.backtop}>
+          <View style={styles.backIcon}>
                     <TouchableOpacity onPress={this.onMainMenuClicked} style={styles.mainMenu}>
 										    <Image style={styles.backArrow} source={require('../../assets/img/back.png')}/>
                         <Text style={styles.txtMainMenu}>Pagamento</Text>
                     </TouchableOpacity>
               </View>
-              <View style={styles.profile}>
+          </View>
+        <View style={styles.header}>
+          <View style={styles.backAndProfile}>
+
+              {/* <View style={styles.profile}>
                   <View style={styles.circleView}>
                   <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>{this.props.store.user.charAt(0)}</Text></View>
                   </View>
                   <Text style={styles.userName}>{this.props.store.user}</Text>
                   <Text style={styles.userEmail}>{this.props.store.email}</Text>
                  
-              </View>
+              </View> */}
             </View>
             <View style={styles.clientDetails}>
-                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
-                <Text style={{color:'white', fontSize:24, fontWeight:'bold', marginLeft:8, marginLeft:32}}>{this.props.store.customerName}</Text>
-                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: {this.props.store.meterNumber}</Text>
-                <Text style={{color:'#2190fe', fontSize:18, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: {this.props.store.customerAddress}</Text>
+            <Text style={{color:'#2190fe', fontSize:width*0.040, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
+                <Text style={{color:'white', fontSize:width*0.050, fontWeight:'bold', marginLeft:8, marginLeft:32}}>{this.props.store.customerName}</Text>
+                <Text style={{color:'#2190fe', fontSize:width*0.040, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: {this.props.store.meterNumber}</Text>
+                <Text style={{color:'#2190fe', fontSize:width*0.040, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: {this.props.store.customerAddress}</Text>
             </View>
         </View>
 
-    <ScrollView style={styles.centerView}>
+    <View style={styles.centerView}>
       <View>
         <View style={styles.viewAmount}>
           <Text style={styles.lblAmount}>Total a Pagar</Text>
           
-          <Text style={styles.lblAmountVal}>{this.props.store.paymentAmount}MT</Text>
+          <Text style={styles.lblAmountVal}>{this.toDecimal(this.props.store.paymentAmount)}MT</Text>
         
         </View>
-
+        
         <View style={styles.viewPaymentSystems}>
           <Text style={styles.lblPayments}>Numero com {'\n'}M-Pesa</Text>
           <View style={styles.inputWidget}>
           <TextInput style={styles.input}
-                placeholder="841234567"
+                placeholder="Ex.: 841234567"
                 value={this.state.phone}
                 keyboardType="numeric"
                 maxLength={9}
                 minLength={9}
                 onChangeText={(phone) => this.setState({ phone:phone})}
                 />
+                  <Text style={styles.errorMsg}>{this.state.message}{'\n'}</Text>
                 </View>
           <View style={styles.viewSecondRow}>
           <TouchableOpacity style={styles.paymentButtonsCD} onPress={this.Mpesa}>
@@ -217,7 +206,7 @@ export default class MPesa extends Component{
           </View>
         </View>
         </View>
-        </ScrollView>
+        </View>
 
     </View>
     </TouchableWithoutFeedback>
@@ -236,10 +225,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
+  errorMsg:{
+    color:'red',
+    fontWeight:'bold',
+    position:'absolute',
+    left:0,
+    top: height*0.1
+  },
   inner:{
-    flex:1,
+    padding: height*0.11,
+    flex: 1,
+    justifyContent: "space-around",
+    alignItems:'center'
+  },
+  backtop:{
+    position:'absolute',
+    top:-5,
+
+    flexDirection:'row',
     alignItems:'center',
-    justifyContent:'center'
+    height:height*0.14,
+    width:width,
+    backgroundColor:"#00035c",
+    paddingBottom:height*0.05,
   },
   backAndProfile:{
     flexDirection:"row",
@@ -257,24 +265,32 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     backgroundColor:"#00035c",
     width:width,
+    top:height*0.03,
+    position:'absolute',
     borderBottomRightRadius:height*0.06,
     borderBottomLeftRadius:height*0.06,
-    marginTop:height*0.05
+    zIndex:-3,
+    elevation:-3
   },
   centerView:{
-    width:width*0.95,
-	  top:-height*0.07,
-    paddingTop:height*0.135,
-    zIndex: -3,
-    elevation:-3,
+    width:width,
+
+    //position:'absolute',
+    minHeight:height*0.4,
+    top:height*0.05,
+    zIndex:-5,
+    elevation:-5
   },
   footerLogo:{
     position: 'absolute',
-    bottom:'5%',
+    bottom:0,
     width:130,
-    height:40,
+    height:height*0.1,
     alignItems: 'center',
-    padding:8
+    padding:8,
+    backgroundColor:'white',
+    width:width,
+    
   },
   paymentButtonsCD:{
     backgroundColor:"#05185e",
@@ -299,7 +315,7 @@ const styles = StyleSheet.create({
     color:"white"
   },
   lblAmountVal:{
-    fontSize:height*.07,
+    fontSize:width*.1,
     fontWeight:"bold",
     color:'#05185E',
     marginLeft:16,
@@ -307,7 +323,6 @@ const styles = StyleSheet.create({
   lblAmount:{
     fontSize:height*.028,
     fontWeight:"bold",
-    marginTop:-height*0.05,
     marginLeft:16,
   },
   lblPayments:{
@@ -326,13 +341,9 @@ const styles = StyleSheet.create({
   viewPaymentSystems:{
     flex:1,
     margin:20,
-    marginTop:-height*0.02,
+    
   },
-  viewAmount:{
-    flex:1,
-    margin:20,
-    height:height*0.07,
-  },
+ 
   
   logOutTxt:{
     color:"white",

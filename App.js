@@ -16,7 +16,7 @@ import PrePagoDashBoard from './src/screens/PrePagoDashBoard';
 import PrePagoPayment from './src/screens/PrePagoPayment';
 import MPesa from "./src/screens/MPesa";
 import PaymentDone from "./src/screens/PaymentDone"
-
+import PrePagoFromDashBoard from './src/screens/PrePagoFromDashBoard'
 //Import store
 import store from "./src/store";
 // const DrawerNavigation = createDrawerNavigator({
@@ -41,6 +41,7 @@ const StackNavigation = createStackNavigator(
     PrePagoPayment:PrePagoPayment,
     MPesa:MPesa,
     PaymentDone:PaymentDone,
+    PrePagoFromDashBoard: PrePagoFromDashBoard,
   },
   {
     index: 0,

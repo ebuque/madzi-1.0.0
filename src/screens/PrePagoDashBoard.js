@@ -30,7 +30,31 @@ export default class PrePagoDashBoard extends Component{
     };
   }
   componentDidMount() {}
-
+  PrePago =()=>{
+    this.setState({isLoading: true})
+   fetch('https://google.com', /** Just to fetch something, in order to have processing time */ {
+       method: 'GET',
+       headers: {
+         Accept: 'application/html',
+         'Content-Type': 'application/html'
+       }
+   }).then((response )=> response.json()).then(
+       (json)=> {
+     
+         this.setState({isLoading: false})
+         const { navigate } = this.props.navigation;
+         navigate("PrePagoFromDashBoard");        
+     }).catch((error) => {
+       this.setState({isLoading: false})
+       const { navigate } = this.props.navigation;
+       navigate("PrePagoFromDashBoard");        
+     }).finally(() => {
+       this.setState({ isLoading: false });
+       const { navigate } = this.props.navigation;
+       navigate("PrePagoFromDashBoard");        
+     });
+ };
+ 
 
   onMainMenuClicked = () => {
     const { navigate } = this.props.navigation;
@@ -98,24 +122,24 @@ export default class PrePagoDashBoard extends Component{
                         <Text style={styles.txtMainMenu}>Menu Pincipal</Text>
                     </TouchableOpacity>
               </View>
-              <View style={styles.profile}>
+              {/* <View style={styles.profile}>
                   <View style={styles.circleView}>
                   <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>{this.props.store.user.charAt(0)}</Text></View>
                   </View>
                   <Text style={styles.userName}>{this.props.store.user}</Text>
                   <Text style={styles.userEmail}>{this.props.store.email}</Text>
-              </View>
+              </View> */}
             </View>
             <View style={styles.clientDetails}>
-                <Text style={{color:'#2190fe', fontSize:height*0.025, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
-                <Text style={{color:'white', fontSize:height*0.030, fontWeight:'bold', marginLeft:8, marginLeft:32}}>{this.props.store.customerName}</Text>
-                <Text style={{color:'#2190fe', fontSize:height*0.025, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: {this.props.store.meterNumber}</Text>
-                <Text style={{color:'#2190fe', fontSize:height*0.025, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: {this.props.store.customerAddress}</Text>
-            </View>
+            <Text style={{color:'#2190fe', fontSize:width*0.040, fontWeight:'bold', margin:8, marginLeft:32}}>Cliente:</Text>
+                <Text style={{color:'white', fontSize:width*0.050, fontWeight:'bold', marginLeft:8, marginLeft:32}}>{this.props.store.customerName}</Text>
+                <Text style={{color:'#2190fe', fontSize:width*0.040, fontWeight:'bold', margin:8, marginLeft:32}} >No. Contador: {this.props.store.meterNumber}</Text>
+                <Text style={{color:'#2190fe', fontSize:width*0.040, fontWeight:'bold', margin:8, marginLeft:32}} >Endereço: {this.props.store.customerAddress}</Text>
+           </View>
         </View>
         <ScrollView style={styles.centerView}>
           <View style={{alignItems:'center'}}>
-              <TouchableOpacity onPress={this.PrePagoPayment} style={styles.actionButton1}><Text style={styles.buttonTxt}>Comprar Água</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.PrePago} style={styles.actionButton1}><Text style={styles.buttonTxt}>Comprar Água</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton2}><Text style={styles.buttonTxt}>Pagar Dívidas</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton3}><Text style={styles.buttonTxt}>Reclamações</Text></TouchableOpacity>
               <TouchableOpacity style={styles.actionButton4}><Text style={styles.buttonTxt3}>Histórico de Compras</Text></TouchableOpacity>
@@ -152,22 +176,26 @@ const styles = StyleSheet.create({
     width:width,
     borderBottomRightRadius:height*0.06,
     borderBottomLeftRadius:height*0.06,
-    marginTop:height*0.05
+    marginTop:height*0.05,
+    position:'absolute',
+    top:-5,
   },
   centerView:{
-    width:width*0.95,
-	  top:-height*0.05,
-    paddingTop:height*0.135,
-    zIndex: -3,
-    elevation:-3
+    width:width,
+	  top:height*0.35,
+    height:height*0.7,
+    position:'absolute',
+    paddingTop:height*0.06
   },
   footerLogo:{
     position: 'absolute',
-    bottom:'5%',
+    bottom:0,
     width:130,
-    height:40,
+    height:height*0.1,
     alignItems: 'center',
-    padding:8
+    padding:8,
+    backgroundColor:'white',
+    width:width
   },
   actionButton1:{
     backgroundColor:"#05185e",

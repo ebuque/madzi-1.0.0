@@ -203,7 +203,8 @@ const styles = StyleSheet.create({
     marginLeft:width*0.45,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:-height*0.05
+    marginTop:-height*0.05,
+    width:width*0.5
   },
   logOutTxt:{
     color:"white",
