@@ -77,6 +77,7 @@ export default class MPesa extends Component{
         this.props.store.addValue('category', json.category);
         this.props.store.addValue('debtAmount', json.debtAmount);
         this.props.store.addValue('availabilityService', json.availabilityService);
+        this.props.store.addValue('dataehora', new Date().toLocaleString('en-GB', { timeZone: 'CAT' }));
         const { navigate } = this.props.navigation;
         navigate("PaymentDone");
          
@@ -149,24 +150,28 @@ export default class MPesa extends Component{
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
-          <View style={styles.backtop}>
+          {/* <View style={styles.backtop}>
           <View style={styles.backIcon}>
                     <TouchableOpacity onPress={this.onMainMenuClicked} style={styles.mainMenu}>
 										    <Image style={styles.backArrow} source={require('../../assets/img/back.png')}/>
                         <Text style={styles.txtMainMenu}>Pagamento</Text>
                     </TouchableOpacity>
               </View>
-          </View>
+          </View> */}
         <View style={styles.header}>
-          <View style={styles.backAndProfile}>
-
+        <View style={styles.backAndProfile}>
+              <View style={styles.backIcon}>
+                    <TouchableOpacity onPress={this.onMainMenuClicked} style={styles.mainMenu}>
+										    <Image style={styles.backArrow} source={require('../../assets/img/back.png')}/>
+                        <Text style={styles.txtMainMenu}>Menu Pincipal</Text>
+                    </TouchableOpacity>
+              </View>
               {/* <View style={styles.profile}>
                   <View style={styles.circleView}>
                   <View style={styles.profilePhoto}><Text style={styles.initialLetterIfNoPhoto}>{this.props.store.user.charAt(0)}</Text></View>
                   </View>
                   <Text style={styles.userName}>{this.props.store.user}</Text>
                   <Text style={styles.userEmail}>{this.props.store.email}</Text>
-                 
               </View> */}
             </View>
             <View style={styles.clientDetails}>
@@ -252,7 +257,7 @@ const styles = StyleSheet.create({
   },
   backAndProfile:{
     flexDirection:"row",
-    height:height*0.1
+    height:'40%'
   },
   clientDetails:{
     height:height*0.2,
@@ -266,7 +271,7 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     backgroundColor:"#00035c",
     width:width,
-    top:height*0.03,
+    top:height*0.04,
     position:'absolute',
     borderBottomRightRadius:height*0.06,
     borderBottomLeftRadius:height*0.06,

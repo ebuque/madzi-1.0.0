@@ -190,10 +190,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
-  backAndProfile:{
-    flexDirection:"row",
-    height:height*0.1
-  },
   clientDetails:{
     height:height*0.2,
     flexDirection:'column'

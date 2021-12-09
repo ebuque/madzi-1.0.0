@@ -29,6 +29,7 @@ class Loja {
     @observable debtAmount = ""
     @observable availabilityService = ""
     @observable waterVolume =""
+    @observable dataehora = ""
     @observable mpesaApiEndpoint = "http://41.223.152.98:8077/mpesa/auth/transaction"
    
     
@@ -36,6 +37,9 @@ class Loja {
         switch (type) {
             case 'email':
                 this.email = item;
+                break;
+            case 'dataehora':
+                this.dataehora = item;
                 break;
            case 'debtAmount':
                this.debtAmount = item;

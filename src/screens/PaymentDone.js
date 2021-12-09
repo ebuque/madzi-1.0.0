@@ -78,7 +78,7 @@ export default class PaymentDone extends Component{
         <title>Pdf Content</title>
         <style>
             body {
-                font-size: 16px;
+                font-size: 15px;
                 text-align: justify;
             }
     
@@ -93,6 +93,10 @@ export default class PaymentDone extends Component{
                 width: 50%;
                 margin-left: 0;
             }
+            .dataehora{
+              position: absolute;
+                right: 50%;
+            }
             img{
                 position: absolute;
                 right: 50%;
@@ -102,8 +106,7 @@ export default class PaymentDone extends Component{
     </head>
 
     <body>
-        <h2>Código da recarga:</h2> 
-        <h2>`+this.props.store.rechargeCode+`</h2>
+        <h3>Código da recarga: `+this.props.store.rechargeCode+`</h3> 
             <hr>
             <h3>Compra</h3>
             <label>Valor Pago: `+`${this.toDecimal(this.props.store.paymentAmount)}`+`MT</label><br>
@@ -123,7 +126,8 @@ export default class PaymentDone extends Component{
             <label>Bairro: `+`${this.props.store.neighborhood}`+`</label><br>
             <label>Escalao: `+`${this.props.store.scale}`+`</label><br>
             <label>Tarifario: `+`${this.props.store.category}`+`</label><br>
-            <label>Referencia: `+`${this.props.store.transactionId}`+`</label><br>
+            <label>Referencia: `+`${this.props.store.transactionId}`+`</label><br><hr>
+            <label class="dataehora">Data e hora: `+`${this.props.store.dataehora}`+`</label><br>
             <div>
                 <img src="https://erasmobuque.life/fipagmadzi.png"/>
           </div>
@@ -177,6 +181,9 @@ export default class PaymentDone extends Component{
               <Text style={styles.txtDetails}>Escalão: {this.props.store.scale}</Text>
               <Text style={styles.txtDetails}>Tarifário: {this.props.store.category}</Text>
               <Text style={styles.txtDetails}>Referência: {this.props.store.transactionId}</Text>
+              <View style={styles.footerLIne}>
+              <Text style={styles.txtDataehora}>Data e hora: {this.props.store.dataehora}</Text>
+              </View>
 
           <View style={styles.footerLogo}>
              <Image style={styles.imgFooterLogo} source={require('../../assets/img/fipagmadzi.png')}/>
@@ -211,6 +218,14 @@ const styles = StyleSheet.create({
   },
   txtDetails:{
       fontSize:height*0.020
+  },
+  txtDataehora:{
+    fontSize:height*0.015,
+    right:-width*0.3
+  },
+  footerLIne:{
+    borderTopWidth:1,
+      width:width*0.8,
   },
   rowRecharge:{
       borderBottomWidth:1,
