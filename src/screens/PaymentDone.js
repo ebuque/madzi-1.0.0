@@ -226,6 +226,7 @@ export default class PaymentDone extends Component{
             <label>Cliente: `+`${this.props.store.customerName}`+`</label><br>
             <label>Nr. do Contador: `+`${this.props.store.meterNumber}`+`</label><br>
             <label>Regiao: `+`${this.props.store.customerAddress}`+`</label><br>
+            <label>Bairro: `+`${this.props.store.neighborhood}`+`</label><br>
             <label>Escalao: `+`${this.props.store.scale}`+`</label><br>
             <label>Tarifario: `+`${this.props.store.category}`+`</label><br>
             <label>Referencia: `+`${this.props.store.transactionId}`+`</label><br>
@@ -278,6 +279,7 @@ export default class PaymentDone extends Component{
               <Text style={styles.txtDetails}>Cliente: {this.props.store.customerName}</Text>
               <Text style={styles.txtDetails}>Nr. do Contador: {this.props.store.meterNumber}</Text>
               <Text style={styles.txtDetails}>Região: {this.props.store.customerAddress}</Text>
+              <Text style={styles.txtDetails}>Bairro: {this.props.store.neighborhood}</Text>
               <Text style={styles.txtDetails}>Escalão: {this.props.store.scale}</Text>
               <Text style={styles.txtDetails}>Tarifário: {this.props.store.category}</Text>
               <Text style={styles.txtDetails}>Referência: {this.props.store.transactionId}</Text>

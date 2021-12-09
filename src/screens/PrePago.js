@@ -66,6 +66,7 @@ export default class PrePago extends Component{
             this.props.store.addValue('customerAddress', json.customerDistrict);
             this.props.store.addValue('paymentAmount', this.state.amount)
             this.props.store.addValue('simulationId', json.simulationId)
+            this.props.store.addValue('neighborhood', json.neighborhood)
             const { navigate } = this.props.navigation;
             navigate("PrePagoPayment");
         } else {

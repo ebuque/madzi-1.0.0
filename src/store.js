@@ -16,6 +16,7 @@ class Loja {
     @observable customerName = ""
     @observable meterNumber = ""
     @observable customerAddress =""
+    @observable neighborhood = ""
     @observable paymentAmount = ""
     @observable simulationId = ""
     @observable scale = ""
@@ -42,7 +43,9 @@ class Loja {
            case 'accessToken':
                this.accessToken = item;
                break;
-
+            case 'neighborhood':
+                this.neighborhood = item;
+                break;
            case 'availabilityService':
                this.availabilityService = item;
                break;
