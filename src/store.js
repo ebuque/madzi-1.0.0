@@ -12,7 +12,7 @@ class Loja {
     @observable eKeyMpesa = "3667d86e-075e-4c0c-a75d-7135591b8bf2"
     @observable userId = "ptekid"
     @observable sessionId = "c3c7e6c7-286d-4119-8dff-4e833e275544"
-    @observable token = "63BDAAAC-EC5C-4C38-AC76-8397F46343DA"
+    @observable token = "4CDC9902-ED7A-4B1C-9CFB-DDD50F3B32C1"
     @observable customerName = ""
     @observable meterNumber = ""
     @observable customerAddress =""
